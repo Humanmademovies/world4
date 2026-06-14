@@ -41,6 +41,8 @@ energy, jobs…) to each sector. It's the backbone of World4.
 - **200 products** (this is the *product-by-product*, "pxp", build). EXIOBASE also
   ships an *industry-by-industry* ("ixi") build with **163 industries** — same data,
   different symmetric form (see [ADR 0005](../decisions/0005-exiobase-pxp-2022.md)).
+  **Full lists of all products and industries** (with codes & ISIC):
+  [exiobase-sectors.md](exiobase-sectors.md).
 - **Year 2022** (the series runs 1995–2022; one file per year).
 
 **The monetary core tables** (unit: **million euros, M.EUR**, basic prices):

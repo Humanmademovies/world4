@@ -25,6 +25,7 @@ well as solarpunk utopias — calibrated on serious projection scenarios.
 ## Data
 
 - [Data catalog](data/datasets.md) — **everything** in every dataset (granularity, units, all indicators), with sources.
+- [EXIOBASE sector lists](data/exiobase-sectors.md) — all 200 products (pxp) + 163 industries (ixi), with codes & ISIC.
 - [EXIOBASE 3](data/exiobase.md) — how to fetch the MRIO + its structure.
 
 ## Decisions
