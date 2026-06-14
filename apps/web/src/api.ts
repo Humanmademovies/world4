@@ -87,7 +87,9 @@ export interface WorkTimeParams {
 
 export interface WorkTime {
   region: string;
-  production_hours: number;
+  production_hours: number; // scenario-adjusted
+  baseline_production_hours: number;
+  production_hours_delta: number; // <= 0
   working_age_population: number;
   employed: number;
   weekly_hours_per_worker: number;
@@ -103,27 +105,33 @@ export interface SolveResult {
   feasible: boolean;
 }
 
-export const getLaborCatalog = () => getJson<LaborCatalog>("/labor");
-
-function query(params: Record<string, string | number>): string {
-  return new URLSearchParams(
-    Object.fromEntries(Object.entries(params).map(([k, v]) => [k, String(v)])),
-  ).toString();
+async function postJson<T>(path: string, body: unknown): Promise<T> {
+  const response = await fetch(BASE + path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(`${response.status} on POST ${path}`);
+  return response.json() as Promise<T>;
 }
 
-export const getWorkTime = (region: string, p: WorkTimeParams) =>
-  getJson<WorkTime>(`/labor/${encodeURIComponent(region)}?${query({ ...p })}`);
+export const getLaborCatalog = () => getJson<LaborCatalog>("/labor");
+
+// Work-time queries carry the current levers so the result reflects the scenario
+// (production hours fall as the chosen industries shrink).
+export const getWorkTime = (region: string, p: WorkTimeParams, levers: Lever[]) =>
+  postJson<WorkTime>(`/labor/${encodeURIComponent(region)}/worktime`, { ...p, levers });
 
 export const solveWorkTime = (
   region: string,
   targetWeeklyHours: number,
   solveFor: SolveFor,
   p: WorkTimeParams,
+  levers: Lever[],
 ) =>
-  getJson<SolveResult>(
-    `/labor/${encodeURIComponent(region)}/solve?${query({
-      target_weekly_hours: targetWeeklyHours,
-      solve_for: solveFor,
-      ...p,
-    })}`,
-  );
+  postJson<SolveResult>(`/labor/${encodeURIComponent(region)}/solve`, {
+    ...p,
+    target_weekly_hours: targetWeeklyHours,
+    solve_for: solveFor,
+    levers,
+  });

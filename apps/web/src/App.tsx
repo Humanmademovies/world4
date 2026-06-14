@@ -161,6 +161,7 @@ export function App() {
           <LaborPanel
             region={selectedRegion}
             available={selectedRegion !== null && laborRegions.includes(selectedRegion)}
+            levers={levers}
           />
           <ImpactPanels impacts={sim?.impacts ?? []} loading={simLoading} />
         </aside>

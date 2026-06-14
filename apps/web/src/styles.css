@@ -343,6 +343,11 @@ button:disabled {
   color: var(--muted);
   font-size: 0.78rem;
 }
+.wt-freed {
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
 .wt-target {
   background: var(--bg);
   border: 1px solid var(--line);

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   getWorkTime,
   solveWorkTime,
+  type Lever,
   type SolveFor,
   type SolveResult,
   type WorkTime,
@@ -12,6 +13,7 @@ import {
 interface Props {
   region: string | null;
   available: boolean; // region has demography (labour view possible)
+  levers: Lever[]; // current demand-reduction scenario
 }
 
 const DEFAULTS: WorkTimeParams = {
@@ -46,7 +48,7 @@ function Slider(props: {
   );
 }
 
-export function LaborPanel({ region, available }: Props) {
+export function LaborPanel({ region, available, levers }: Props) {
   const [params, setParams] = useState<WorkTimeParams>(DEFAULTS);
   const [forward, setForward] = useState<WorkTime | null>(null);
   const [target, setTarget] = useState(32);
@@ -62,10 +64,10 @@ export function LaborPanel({ region, available }: Props) {
       return;
     }
     const h = setTimeout(() => {
-      getWorkTime(region, params).then(setForward).catch(() => setForward(null));
+      getWorkTime(region, params, levers).then(setForward).catch(() => setForward(null));
     }, 200);
     return () => clearTimeout(h);
-  }, [region, usable, params]);
+  }, [region, usable, params, levers]);
 
   useEffect(() => {
     if (!usable || !region) {
@@ -73,10 +75,12 @@ export function LaborPanel({ region, available }: Props) {
       return;
     }
     const h = setTimeout(() => {
-      solveWorkTime(region, target, solveFor, params).then(setSolved).catch(() => setSolved(null));
+      solveWorkTime(region, target, solveFor, params, levers)
+        .then(setSolved)
+        .catch(() => setSolved(null));
     }, 200);
     return () => clearTimeout(h);
-  }, [region, usable, params, target, solveFor]);
+  }, [region, usable, params, target, solveFor, levers]);
 
   if (!usable) {
     return (
@@ -120,6 +124,12 @@ export function LaborPanel({ region, available }: Props) {
             ? `${(forward.employed / 1e6).toFixed(1)} M workers · ${(forward.production_hours / 1e9).toFixed(1)} G·hr/yr to produce`
             : ""}
         </div>
+        {forward && forward.production_hours_delta < 0 && (
+          <div className="wt-freed">
+            ▼ {(-forward.production_hours_delta / 1e6).toFixed(0)} M·hr/yr freed by your levers (
+            {((forward.production_hours_delta / forward.baseline_production_hours) * 100).toFixed(2)}%)
+          </div>
+        )}
       </div>
 
       <div className="wt-target">
