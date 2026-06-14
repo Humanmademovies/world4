@@ -59,9 +59,17 @@ Cutting global *Paddy rice* final demand by 50% moves **water −2.2%** (rice is
 water-intensive), CO2 −0.29%, land −0.40% — the kind of physically plausible signature
 the model should produce.
 
+## Work-time panel (brick 4)
+
+Click a country to open its **Work time** panel (equal billing with the ecology
+impacts): sliders for start/retirement age, n% and weeks/year give the weekly hours
+per worker; a target box solves the inverse (target hours → required retirement age /
+n% / start age). When you pull industry levers, the panel reflects the
+**scenario-adjusted** production hours and shows the **hours freed**. See
+[work-time](modeling/work-time.md).
+
 ## Not yet (later bricks)
 
 - Sustainability **target** lines per impact (brick 3) — targets must be sourced first.
-- **Hours → jobs/FTE** conversion sliders (brick 4).
 - Attributing scenario Δ to consuming regions on the map (currently the map shows the
   baseline; panels show global Δ).

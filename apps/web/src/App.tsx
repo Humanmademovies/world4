@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   getImpactByRegion,
   getImpacts,
+  getLaborCatalog,
   getModelInfo,
   simulate,
   type ImpactInfo,
@@ -13,6 +14,7 @@ import {
 } from "./api";
 import { Controls } from "./components/Controls";
 import { ImpactPanels } from "./components/ImpactPanels";
+import { LaborPanel } from "./components/LaborPanel";
 import { WorldMap } from "./components/WorldMap";
 import { coverageColor, fmtValue, RAMP } from "./format";
 
@@ -28,6 +30,7 @@ export function App() {
   const [sim, setSim] = useState<SimResult | null>(null);
   const [simLoading, setSimLoading] = useState(false);
   const [globe, setGlobe] = useState(false);
+  const [laborRegions, setLaborRegions] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   // Initial load.
@@ -39,6 +42,10 @@ export function App() {
         if (impactList.length) setMapImpact(impactList[0].key);
       })
       .catch((e) => setError(String(e)));
+    // Labour view is optional (needs the labour artifact); empty list if absent.
+    getLaborCatalog()
+      .then((c) => setLaborRegions(c.regions))
+      .catch(() => setLaborRegions([]));
   }, []);
 
   // Map colouring follows the chosen impact.
@@ -150,6 +157,11 @@ export function App() {
             selectedRegion={selectedRegion}
             levers={levers}
             onChange={setLevers}
+          />
+          <LaborPanel
+            region={selectedRegion}
+            available={selectedRegion !== null && laborRegions.includes(selectedRegion)}
+            levers={levers}
           />
           <ImpactPanels impacts={sim?.impacts ?? []} loading={simLoading} />
         </aside>

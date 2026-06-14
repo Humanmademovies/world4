@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
+from world4_core import Lever
+
 
 class ModelInfo(BaseModel):
     name: str
@@ -43,3 +45,46 @@ class SimResult(BaseModel):
     scenario: str
     model: str
     impacts: list[SimImpact] = Field(default_factory=list)
+
+
+class LaborCatalog(BaseModel):
+    year: int
+    regions: list[str] = Field(..., description="Region codes that have demography (labour view).")
+
+
+class WorkTimeResponse(BaseModel):
+    region: str
+    production_hours: float = Field(
+        ..., description="Hours/year to produce (scenario-adjusted if levers are set)."
+    )
+    baseline_production_hours: float = Field(..., description="Hours before any scenario.")
+    production_hours_delta: float = Field(..., description="Change from the scenario (<= 0).")
+    working_age_population: float
+    employed: float
+    weekly_hours_per_worker: float
+
+
+class SolveResponse(BaseModel):
+    region: str
+    solve_for: str
+    target_weekly_hours: float
+    value: float | None = Field(
+        ..., description="Solved value, or null if the target is infeasible."
+    )
+    feasible: bool
+
+
+class WorkTimeRequest(BaseModel):
+    """Work-time query carrying the current demand-reduction levers, so the result
+    reflects the scenario (production hours fall as industries shrink)."""
+
+    start_age: int = 20
+    retirement_age: int = 65
+    non_employment_rate: float = 0.20
+    weeks_per_year: float = 52.0
+    levers: list[Lever] = Field(default_factory=list)
+
+
+class SolveRequest(WorkTimeRequest):
+    target_weekly_hours: float
+    solve_for: str = "retirement_age"

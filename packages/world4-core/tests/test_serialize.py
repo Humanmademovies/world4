@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from world4_core import (
     consumption_footprint,
+    leontief_inverse,
     load_model,
     load_test_model,
     run_scenario,
@@ -15,6 +17,7 @@ from world4_core import (
     to_served_model,
 )
 from world4_core.model import Lever, Scenario
+from world4_core.mrio import Extension, MrioModel
 
 
 def test_served_roundtrip_matches_full_model(tmp_path: Path) -> None:
@@ -46,3 +49,21 @@ def test_served_roundtrip_matches_full_model(tmp_path: Path) -> None:
     }
     for key, value in full_fp.items():
         assert loaded_fp[key] == pytest.approx(value, rel=1e-9, abs=1e-9)
+
+
+def test_production_hours_multiplier_survives_roundtrip(tmp_path: Path) -> None:
+    model = MrioModel(
+        regions=["R"],
+        sectors=["a", "b"],
+        index=[("R", "a"), ("R", "b")],
+        final_demand=np.array([100.0, 50.0]),
+        leontief=leontief_inverse(np.array([[0.1, 0.2], [0.0, 0.1]])),
+        extensions={
+            "employment": Extension("employment", ["hrs"], ["M.hr"], np.array([[1.0, 2.0]]))
+        },
+    )
+    served = to_served_model(model)
+    assert served.production_hours_multiplier is not None
+    loaded = load_model(save_model(served, tmp_path / "m.npz"))
+    assert loaded.production_hours_multiplier is not None
+    assert loaded.production_hours_multiplier == pytest.approx(served.production_hours_multiplier)

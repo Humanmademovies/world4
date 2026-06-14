@@ -5,6 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from world4_core.build import production_hours_multiplier
 from world4_core.engine import build_delta_final_demand, leontief_inverse, run_scenario
 from world4_core.model import Lever, Scenario
 from world4_core.mrio import Extension, MrioModel
@@ -63,6 +64,39 @@ def test_run_scenario_full_cut_equals_negative_baseline() -> None:
     (total,) = result.totals
     assert total.delta == pytest.approx(-total.baseline)
     assert total.relative == pytest.approx(-1.0)
+
+
+def test_production_hours_multiplier() -> None:
+    # 1 region, 2 sectors; employment-hours intensity h = [1, 2] M.hr per M.EUR.
+    model = MrioModel(
+        regions=["R"],
+        sectors=["a", "b"],
+        index=[("R", "a"), ("R", "b")],
+        final_demand=np.array([100.0, 50.0]),
+        leontief=leontief_inverse(np.array([[0.1, 0.2], [0.0, 0.1]])),
+        extensions={
+            "employment": Extension("employment", ["hrs"], ["M.hr"], np.array([[1.0, 2.0]]))
+        },
+    )
+    p = production_hours_multiplier(model)
+    assert p is not None
+    assert p.shape == (1, 2)
+    # P @ y must equal the baseline production hours: 1e6 * Σ h[p]·x[p], x = L @ y.
+    output = model.leontief @ model.final_demand
+    expected = 1e6 * (1.0 * output[0] + 2.0 * output[1])
+    assert (p @ model.final_demand)[0] == pytest.approx(expected)
+
+
+def test_production_hours_multiplier_none_without_hours() -> None:
+    model = MrioModel(
+        regions=["R"],
+        sectors=["a"],
+        index=[("R", "a")],
+        final_demand=np.array([1.0]),
+        leontief=np.array([[1.0]]),
+        extensions={"co2": Extension("co2", ["c"], ["kg"], np.array([[1.0]]))},
+    )
+    assert production_hours_multiplier(model) is None
 
 
 def test_unknown_sector_raises() -> None:

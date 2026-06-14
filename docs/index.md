@@ -19,12 +19,16 @@ well as solarpunk utopias — calibrated on serious projection scenarios.
 
 - [Leontief engine](modeling/leontief.md) — the maths of propagation.
 - [Parameters & anti-mathwashing](modeling/parameters.md) — every assumption is a sourced slider.
+- [Work-time model](modeling/work-time.md) — the labour-redistribution identity, bidirectional, coupled to industries (brick 4).
 - [Validation](validation.md) — binary checks against published figures (brick 1: France footprint).
 - [Dashboard](dashboard.md) — the web client, the API surface, and headline impacts (brick 2).
 
 ## Data
 
-- [EXIOBASE 3](data/exiobase.md) — the dataset, its licence, how to fetch it.
+- [Data catalog](data/datasets.md) — **everything** in every dataset (granularity, units, all indicators), with sources.
+- [EXIOBASE sector lists](data/exiobase-sectors.md) — all 200 products (pxp) + 163 industries (ixi), with codes & ISIC.
+- [EXIOBASE stressors](data/exiobase-stressors.md) — all 733 satellite-account indicators (8 extensions), with units.
+- [EXIOBASE 3](data/exiobase.md) — how to fetch the MRIO + its structure.
 
 ## Decisions
 

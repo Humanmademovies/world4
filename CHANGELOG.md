@@ -6,6 +6,22 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added — Brick 4: work-time / labour redistribution
+- `world4_core.labor`: the labour accounting identity (forward) and inverse solvers
+  (target weekly hours → retirement age / n% / start age) with honest infeasibility.
+- Labour data pipeline: `LaborInputs`/`RegionLabor`, `build_labor_inputs` (EXIOBASE
+  production hours + UN WPP single-age demography; RoW guarded), `world4 build-labor`.
+- Industry→labour coupling: a precomputed production-hours multiplier `P`
+  (`Δhours = P·Δy`) stored in the model artifact; reducing an industry shrinks a
+  country's production hours and the work-time view updates.
+- API: `/api/labor` catalog, GET + POST `/labor/{region}` and `/labor/{region}/solve`
+  (POST variants carry the levers → scenario-adjusted hours).
+- Dashboard: a **Work time** panel (bidirectional sliders + target solve) shown next
+  to the ecology impacts; pulling industry levers shows the hours freed.
+- Data docs: `docs/data/datasets.md` (full catalog), `exiobase-sectors.md` (200 pxp +
+  163 ixi), `exiobase-stressors.md` (all 733), `docs/modeling/work-time.md`.
+- Demography source: UN WPP 2024.
+
 ### Added — Brick 2: API + web dashboard
 - Precomputed-multiplier serving: `MrioModel` now supports `multipliers` (M=S·L)
   with optional `leontief`/`Extension.S`; `build.to_served_model`,

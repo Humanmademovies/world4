@@ -302,3 +302,80 @@ button:disabled {
 .spin {
   color: var(--muted);
 }
+
+/* Work-time panel */
+.labor {
+  margin-top: 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+.wt-slider {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr 2.8rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.35rem 0;
+}
+.wt-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.wt-val {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+.wt-result {
+  margin: 0.7rem 0;
+  text-align: center;
+}
+.wt-big {
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.wt-unit {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+.wt-sub {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.wt-freed {
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+.wt-target {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+}
+.wt-target-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+}
+.wt-target-row input[type="number"] {
+  width: 4rem;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.2rem 0.4rem;
+}
+.wt-solved {
+  margin-top: 0.45rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.wt-solved.ok {
+  color: var(--accent);
+}
+.wt-solved.no {
+  color: #d29922;
+}
