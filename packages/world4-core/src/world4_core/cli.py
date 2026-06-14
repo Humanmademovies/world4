@@ -14,7 +14,9 @@ from collections.abc import Sequence
 
 from world4_core.build import to_served_model
 from world4_core.data import load_exiobase_model, load_test_model
+from world4_core.data.labor_build import build_labor_inputs
 from world4_core.engine import run_scenario
+from world4_core.labor import save_labor_inputs
 from world4_core.model import Lever, Scenario
 from world4_core.serialize import save_model
 
@@ -72,6 +74,24 @@ def _cmd_build_model(exiobase: str | None, use_test: bool, out: str) -> int:
     return 0
 
 
+def _cmd_build_labor(exiobase: str, wpp: str, year: int, out: str) -> int:
+    inputs = build_labor_inputs(exiobase, wpp, year)
+    path = save_labor_inputs(inputs, out)
+    with_demography = sum(1 for r in inputs.regions.values() if r.population_by_age)
+    print(
+        json.dumps(
+            {
+                "built": str(path),
+                "year": inputs.year,
+                "regions": len(inputs.regions),
+                "with_demography": with_demography,
+            },
+            indent=2,
+        )
+    )
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="world4", description="World4 engine CLI.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -88,6 +108,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     source.add_argument("--test", action="store_true", help="Build from the synthetic test MRIO.")
     build.add_argument("--out", required=True, help="Output artifact path (.npz).")
 
+    labor = sub.add_parser(
+        "build-labor", help="Build the labour-inputs artifact (EXIOBASE hours + UN WPP demography)."
+    )
+    labor.add_argument("--exiobase", required=True, help="Path to an EXIOBASE 3 zip/folder.")
+    labor.add_argument("--wpp", required=True, help="Path to UN WPP single-age CSV (.csv.gz).")
+    labor.add_argument("--year", type=int, default=2022, help="Year for demography (default 2022).")
+    labor.add_argument("--out", required=True, help="Output artifact path (.json).")
+
     args = parser.parse_args(argv)
 
     if args.command == "info":
@@ -96,6 +124,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _cmd_demo(args.sector, args.reduction)
     if args.command == "build-model":
         return _cmd_build_model(args.exiobase, args.test, args.out)
+    if args.command == "build-labor":
+        return _cmd_build_labor(args.exiobase, args.wpp, args.year, args.out)
     return 1
 
 
