@@ -1,0 +1,25 @@
+{
+  "name": "world4-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "World4 dashboard — 49-region choropleth + policy sliders over the world4 API.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "maplibre-gl": "^5.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^6.0.2",
+    "typescript": "^5.6.0",
+    "vite": "^8.0.16"
+  }
+}

@@ -20,9 +20,11 @@ serious published projection scenarios. See the [roadmap](docs/roadmap.md).
 
 ## Status
 
-🌱 **Brick 0 — engine seed.** The Leontief engine runs on a synthetic test MRIO,
-fully tested. Real EXIOBASE 3 wiring and the validation against published
-footprints are next (brick 1).
+🌍 **Bricks 0–2 done.** The Leontief engine runs on real EXIOBASE 3 (validated
+against France's published footprint), and an interactive **web dashboard** (React +
+MapLibre) lets you colour the world by impact and pull demand-reduction levers with
+live results. Next: sourced sustainability targets (brick 3). See the
+[roadmap](docs/roadmap.md).
 
 ## Quickstart
 
@@ -34,6 +36,16 @@ uv run pytest                             # run the test suite
 uv run world4 info                        # inspect the test model
 uv run world4 demo --sector food --reduction 0.5   # propagate a reduction
 uv run world4-api                         # serve the HTTP API at http://127.0.0.1:8000/docs
+```
+
+Dashboard on real data (after downloading EXIOBASE — see
+[docs/data/exiobase.md](docs/data/exiobase.md)):
+
+```bash
+uv run world4 build-model --exiobase data/exiobase3/IOT_2022_pxp.zip \
+    --out data/models/exiobase_2022_pxp.npz          # precompute once
+WORLD4_MODEL_PATH=data/models/exiobase_2022_pxp.npz uv run world4-api
+cd apps/web && npm install && npm run dev            # open the dashboard
 ```
 
 ## Layout
