@@ -72,8 +72,23 @@ uv run ruff format .            # format
 uv run mypy -p world4_core -p world4_api          # strict type check
 uv run bandit -r packages/world4-core/src apps/api/src   # security static analysis
 uv run world4 info|demo         # engine CLI on the test MRIO
-uv run world4-api               # FastAPI dev server
+uv run world4 build-model --exiobase data/exiobase3/IOT_2022_pxp.zip \
+    --out data/models/exiobase_2022_pxp.npz   # precompute the served artifact
+WORLD4_MODEL_PATH=data/models/exiobase_2022_pxp.npz uv run world4-api  # API on real data
 ```
+
+Web dashboard (`apps/web`, React+TS+Vite, MapLibre):
+
+```bash
+cd apps/web && npm install
+npm run build      # tsc --noEmit + vite build -> dist/ (served by world4-api at /)
+npm run dev        # hot reload; proxies /api to the API
+```
+
+The API serves the artifact at `WORLD4_MODEL_PATH` if set, else the test model — so
+CI and a fresh clone work offline. Port 8000 is reserved on some Windows setups; set
+`WORLD4_API_PORT`. The engine never touches the big Leontief inverse at serve time
+(it uses precomputed multipliers `M = S·L`; see ADR 0006).
 
 Real-EXIOBASE tests are marked `@pytest.mark.exiobase` and skipped unless data is
 present. The big download must never run in CI; see `docs/data/exiobase.md`.

@@ -6,6 +6,21 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added — Brick 2: API + web dashboard
+- Precomputed-multiplier serving: `MrioModel` now supports `multipliers` (M=S·L)
+  with optional `leontief`/`Extension.S`; `build.to_served_model`,
+  `serialize.save_model`/`load_model` (npz, no pickle), and `world4 build-model`
+  produce/load a compact artifact the API loads in ~0.04 s.
+- Headline impact catalog (`world4_core.impacts`): curated same-unit aggregates
+  with honest coverage flags, generic fallback for unknown models.
+- Expanded FastAPI under `/api`: `model/info`, `impacts`, `impacts/{key}/by-region`,
+  `simulate`, `scenario`; engine errors → 422; serves the built web client at `/`.
+- `apps/web`: React + TypeScript + Vite dashboard with a MapLibre choropleth
+  (2D + globe), region selection, searchable sector levers, and side-by-side impact
+  panels (no aggregate index; coverage shown). Bundled countries GeoJSON (Natural
+  Earth 110m, 43 EXIOBASE countries).
+- Docs: `docs/dashboard.md`, ADR 0006; web build added to CI.
+
 ### Added — Brick 1: real EXIOBASE wiring + France validation
 - Consumption-based footprint accounting: `consumption_footprint`, `per_capita`,
   `FootprintEntry`, `RegionFootprint`.

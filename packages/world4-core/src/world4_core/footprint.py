@@ -44,10 +44,9 @@ class RegionFootprint(BaseModel):
 def consumption_footprint(model: MrioModel, region: str) -> RegionFootprint:
     """Compute the consumption-based footprint of ``region`` for every stressor."""
     demand = model.consuming_demand(region)
-    output = model.leontief @ demand
     entries: list[FootprintEntry] = []
     for ext in model.extensions.values():
-        embodied = ext.S @ output
+        embodied = model.multiplier(ext.name) @ demand
         for i, stressor in enumerate(ext.stressors):
             entries.append(
                 FootprintEntry(

@@ -2,9 +2,18 @@
 
 This is the engine's *internal* data structure, deliberately decoupled from
 ``pymrio``: once a model is extracted (see :mod:`world4_core.data.loaders`) the
-rest of the engine depends only on plain NumPy arrays and label metadata. That
-keeps the core testable with a tiny synthetic MRIO and serialisable for future
-clients (web dashboard today, Godot tomorrow).
+rest of the engine depends only on plain NumPy arrays and label metadata.
+
+A model can be carried in two equivalent forms:
+
+* **Full** — has the Leontief inverse ``leontief`` and extension intensities
+  ``Extension.S``. This is what loaders build from pymrio.
+* **Served** — has precomputed multipliers ``M = S @ L`` (one per extension) and
+  no ``L`` / ``S``. This is the compact, fast-to-load form used by the API
+  (see :mod:`world4_core.build` and :mod:`world4_core.serialize`).
+
+The engine prefers multipliers when present and falls back to ``L`` otherwise, so
+both forms behave identically.
 """
 
 from __future__ import annotations
@@ -21,25 +30,26 @@ Product = tuple[str, str]
 class Extension:
     """A satellite (environmental / social) account.
 
-    ``S`` holds *direct intensities*: stressor emitted/used per unit of sector
-    output. Shape is ``(n_stressors, n_products)``.
+    ``S`` holds *direct intensities* (stressor per unit of sector output), shape
+    ``(n_stressors, n_products)``. It is ``None`` in served models, which keep
+    only the multipliers (in :attr:`MrioModel.multipliers`) plus labels.
     """
 
     name: str
     stressors: list[str]
     units: list[str]
-    S: np.ndarray  # (n_stressors, n_products)
+    S: np.ndarray | None = None  # (n_stressors, n_products) or None in served models
 
     def __post_init__(self) -> None:
-        if self.S.shape[0] != len(self.stressors):
-            raise ValueError(
-                f"extension {self.name!r}: S has {self.S.shape[0]} rows "
-                f"but {len(self.stressors)} stressors"
-            )
         if len(self.units) != len(self.stressors):
             raise ValueError(
                 f"extension {self.name!r}: {len(self.units)} units "
                 f"for {len(self.stressors)} stressors"
+            )
+        if self.S is not None and self.S.shape[0] != len(self.stressors):
+            raise ValueError(
+                f"extension {self.name!r}: S has {self.S.shape[0]} rows "
+                f"but {len(self.stressors)} stressors"
             )
 
 
@@ -51,12 +61,15 @@ class MrioModel:
         regions: ordered unique region codes.
         sectors: ordered unique sector codes.
         index: the ``(region, sector)`` of each product column, length ``n``.
-        leontief: the Leontief inverse ``L = (I - A)^-1``, shape ``(n, n)``.
         final_demand: baseline total final demand per product, length ``n``
             (summed over all *consuming* regions). Used by the scenario engine.
+        leontief: the Leontief inverse ``L = (I - A)^-1``, shape ``(n, n)``; or
+            ``None`` in a served model.
         final_demand_by_region: final demand split by *consuming* region, shape
             ``(n, n_regions)`` with columns aligned to ``regions``. Needed for
             consumption-based (footprint) accounting. ``None`` if not loaded.
+        multipliers: precomputed ``M = S @ L`` per extension name (each shape
+            ``(n_stressors, n)``); or ``None`` in a full model.
         extensions: satellite accounts keyed by name.
         name: human-readable model identifier.
     """
@@ -64,9 +77,10 @@ class MrioModel:
     regions: list[str]
     sectors: list[str]
     index: list[Product]
-    leontief: np.ndarray
     final_demand: np.ndarray
+    leontief: np.ndarray | None = None
     final_demand_by_region: np.ndarray | None = None
+    multipliers: dict[str, np.ndarray] | None = None
     extensions: dict[str, Extension] = field(default_factory=dict)
     name: str = "mrio"
 
@@ -74,6 +88,22 @@ class MrioModel:
     def n(self) -> int:
         """Number of products (region x sector)."""
         return len(self.index)
+
+    def multiplier(self, extension: str) -> np.ndarray:
+        """Return the multiplier matrix ``M = S @ L`` for an extension.
+
+        Uses the precomputed multiplier if available, else derives it from ``L``
+        and the extension's ``S``. Raises if neither is available.
+        """
+        if self.multipliers is not None and extension in self.multipliers:
+            return self.multipliers[extension]
+        ext = self.extensions[extension]
+        if self.leontief is None or ext.S is None:
+            raise ValueError(
+                f"cannot derive multiplier for {extension!r}: need either a "
+                f"precomputed multiplier or both leontief and Extension.S"
+            )
+        return ext.S @ self.leontief
 
     def consuming_demand(self, region: str) -> np.ndarray:
         """Final demand consumed by ``region``, as a vector over all products.

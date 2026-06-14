@@ -38,15 +38,18 @@ def build_delta_final_demand(model: MrioModel, scenario: Scenario) -> np.ndarray
 
 
 def run_scenario(model: MrioModel, scenario: Scenario) -> ScenarioResult:
-    """Propagate a scenario and return per-stressor deltas vs the baseline."""
+    """Propagate a scenario and return per-stressor deltas vs the baseline.
+
+    Uses precomputed multipliers (``M @ Δy``) when available, otherwise derives
+    them from ``L`` and ``S`` — both via :meth:`MrioModel.multiplier`.
+    """
     delta_y = build_delta_final_demand(model, scenario)
-    delta_output = model.leontief @ delta_y
-    baseline_output = model.leontief @ model.final_demand
 
     totals: list[ImpactTotal] = []
     for ext in model.extensions.values():
-        baseline_impact = ext.S @ baseline_output
-        delta_impact = ext.S @ delta_output
+        multiplier = model.multiplier(ext.name)
+        baseline_impact = multiplier @ model.final_demand
+        delta_impact = multiplier @ delta_y
         for i, stressor in enumerate(ext.stressors):
             base = float(baseline_impact[i])
             delta = float(delta_impact[i])
