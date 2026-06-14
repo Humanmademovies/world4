@@ -1,0 +1,32 @@
+"""World4 headless physical-accounting engine.
+
+Public API:
+
+    from world4_core import load_test_model, Scenario, Lever, run_scenario
+
+The engine is UI-agnostic: it consumes a :class:`Scenario` and returns a
+:class:`ScenarioResult`. See ``docs/architecture.md`` for the bigger picture and
+``docs/modeling/`` for the model's non-negotiable framing.
+"""
+
+from world4_core.data import load_exiobase_model, load_test_model
+from world4_core.engine import build_delta_final_demand, leontief_inverse, run_scenario
+from world4_core.model import ImpactTotal, Lever, Scenario, ScenarioResult
+from world4_core.mrio import Extension, MrioModel
+
+__version__ = "0.1.0"
+
+__all__ = [
+    "Extension",
+    "ImpactTotal",
+    "Lever",
+    "MrioModel",
+    "Scenario",
+    "ScenarioResult",
+    "__version__",
+    "build_delta_final_demand",
+    "leontief_inverse",
+    "load_exiobase_model",
+    "load_test_model",
+    "run_scenario",
+]

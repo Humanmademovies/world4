@@ -1,0 +1,41 @@
+# --- Data (NEVER commit EXIOBASE; multi-GB and licence-restricted) ---
+# Ignore the directory's contents but keep the folder (and its own .gitignore).
+/data/*
+!/data/.gitignore
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.uv/
+*.so
+
+# --- Tooling caches ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- Node / web front (brick 2) ---
+node_modules/
+apps/web/dist/
+apps/web/.vite/
+
+# --- Env & secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Editors / OS ---
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
