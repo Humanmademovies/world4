@@ -70,6 +70,10 @@ class MrioModel:
             consumption-based (footprint) accounting. ``None`` if not loaded.
         multipliers: precomputed ``M = S @ L`` per extension name (each shape
             ``(n_stressors, n)``); or ``None`` in a full model.
+        production_hours_multiplier: ``P`` of shape ``(n_regions, n)`` mapping a
+            final-demand vector to production hours worked *in each region*
+            (``hours_by_region = P @ y``; ``Δhours = P @ Δy``). Rows align with
+            ``regions``. ``None`` if the model has no employment-hours account.
         extensions: satellite accounts keyed by name.
         name: human-readable model identifier.
     """
@@ -81,6 +85,7 @@ class MrioModel:
     leontief: np.ndarray | None = None
     final_demand_by_region: np.ndarray | None = None
     multipliers: dict[str, np.ndarray] | None = None
+    production_hours_multiplier: np.ndarray | None = None
     extensions: dict[str, Extension] = field(default_factory=dict)
     name: str = "mrio"
 

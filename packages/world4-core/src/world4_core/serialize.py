@@ -30,6 +30,10 @@ def save_model(model: MrioModel, path: str | Path) -> Path:
     arrays: dict[str, np.ndarray] = {"final_demand": np.asarray(model.final_demand, dtype=float)}
     if model.final_demand_by_region is not None:
         arrays["final_demand_by_region"] = np.asarray(model.final_demand_by_region, dtype=float)
+    if model.production_hours_multiplier is not None:
+        arrays["production_hours_multiplier"] = np.asarray(
+            model.production_hours_multiplier, dtype=float
+        )
 
     ext_meta: list[dict[str, Any]] = []
     for i, (name, ext) in enumerate(model.extensions.items()):
@@ -44,6 +48,7 @@ def save_model(model: MrioModel, path: str | Path) -> Path:
         "index": [list(product) for product in model.index],
         "extensions": ext_meta,
         "has_final_demand_by_region": model.final_demand_by_region is not None,
+        "has_production_hours_multiplier": model.production_hours_multiplier is not None,
     }
     arrays["__meta__"] = np.asarray(json.dumps(meta))
 
@@ -74,6 +79,11 @@ def load_model(path: str | Path) -> MrioModel:
             if meta["has_final_demand_by_region"]
             else None
         )
+        production_hours = (
+            np.ascontiguousarray(data["production_hours_multiplier"])
+            if meta.get("has_production_hours_multiplier")
+            else None
+        )
 
     return MrioModel(
         regions=list(meta["regions"]),
@@ -83,6 +93,7 @@ def load_model(path: str | Path) -> MrioModel:
         leontief=None,
         final_demand_by_region=fdbr,
         multipliers=multipliers,
+        production_hours_multiplier=production_hours,
         extensions=extensions,
         name=meta["name"],
     )
