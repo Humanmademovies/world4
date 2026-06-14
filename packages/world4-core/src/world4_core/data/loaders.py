@@ -53,6 +53,10 @@ def _from_iosystem(io: Any, name: str) -> MrioModel:
     regions = list(dict.fromkeys(region for region, _ in index))
     sectors = list(dict.fromkeys(sector for _, sector in index))
 
+    # Final demand split by *consuming* region (Y columns are (region, category)).
+    by_region = io.Y.T.groupby(level=0).sum().T.reindex(index=product_index, columns=regions)
+    final_demand_by_region = by_region.to_numpy(dtype=float)
+
     extensions: dict[str, Extension] = {}
     for ext_name in io.get_extensions(data=False):
         ext = getattr(io, ext_name)
@@ -72,6 +76,7 @@ def _from_iosystem(io: Any, name: str) -> MrioModel:
         index=index,
         leontief=np.ascontiguousarray(leontief),
         final_demand=np.ascontiguousarray(final_demand),
+        final_demand_by_region=np.ascontiguousarray(final_demand_by_region),
         extensions=extensions,
         name=name,
     )

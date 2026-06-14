@@ -8,8 +8,8 @@ brick is "done" only when its check passes. This file is updated as bricks land.
 | # | Brick | Success criterion | Status |
 | --- | --- | --- | --- |
 | 0 | Scaffold + engine on the test MRIO | `uv run pytest` green; a reduction scenario yields Δimpacts ≤ 0 | ✅ done |
-| 1 | Wire real EXIOBASE 3 | Reproduce a published figure (e.g. France per-capita carbon/water footprint) within tolerance | ⬜ next |
-| 2 | API + web dashboard (44-country globe, sliders) | Move a slider → Δimpacts update on screen in real time | ⬜ |
+| 1 | Wire real EXIOBASE 3 | Reproduce a published figure (France footprint) within tolerance | ✅ done — see [validation.md](validation.md) |
+| 2 | API + web dashboard (44-country globe, sliders) | Move a slider → Δimpacts update on screen in real time | ⬜ next |
 | 3 | Tunable sustainability targets (per limit, sourced) | Each planetary limit shown side by side vs its own target; no aggregate index | ⬜ |
 | 4 | Employment levers (hours → FTE, retirement age, target rate) | Human-hours freed and jobs computed and clearly distinguished | ⬜ |
 | 5 | Anti-mathwashing parameters (e.g. advertising-driven demand) | Each contested assumption is an explicit slider with sourced range + uncertainty shown distinctly | ⬜ |
