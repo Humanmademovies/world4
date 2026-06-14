@@ -99,6 +99,29 @@ def test_labor_endpoints(tmp_path, monkeypatch) -> None:  # type: ignore[no-unty
         assert solved["feasible"] is True
         assert solved["value"] == pytest.approx(65.0)
 
+        # POST worktime with no levers matches the baseline forward.
+        post = client.post(
+            "/api/labor/FR/worktime",
+            json={"start_age": 20, "retirement_age": 65, "non_employment_rate": 0.0, "levers": []},
+        ).json()
+        assert post["weekly_hours_per_worker"] == pytest.approx(40.0)
+        assert post["production_hours_delta"] == 0.0
+        assert post["baseline_production_hours"] == pytest.approx(post["production_hours"])
+
+        # POST solve under (empty) scenario.
+        psolve = client.post(
+            "/api/labor/FR/solve",
+            json={
+                "target_weekly_hours": 40,
+                "solve_for": "retirement_age",
+                "start_age": 20,
+                "non_employment_rate": 0.0,
+                "levers": [],
+            },
+        ).json()
+        assert psolve["feasible"] is True
+        assert psolve["value"] == pytest.approx(65.0)
+
         # Rest-of-World aggregate has no demography -> 409.
         assert client.get("/api/labor/WA").status_code == 409
     finally:

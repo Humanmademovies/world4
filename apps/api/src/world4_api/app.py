@@ -29,11 +29,14 @@ from world4_api.schemas import (
     RegionValues,
     SimImpact,
     SimResult,
+    SolveRequest,
     SolveResponse,
+    WorkTimeRequest,
     WorkTimeResponse,
 )
 from world4_core import (
     LaborInputs,
+    Lever,
     MrioModel,
     Scenario,
     WorkTimeParams,
@@ -177,6 +180,78 @@ def _region_population(region: str) -> tuple[float, list[float]]:
     return region_labor.production_hours, region_labor.population_by_age
 
 
+def _adjust_production_hours(
+    region: str, baseline: float, levers: list[Lever]
+) -> tuple[float, float]:
+    """Apply the scenario's effect on a region's production hours: (adjusted, delta).
+
+    Uses the model's production-hours multiplier ``P``: ``Δhours = (P @ Δy)[region]``.
+    Falls back to no change if there are no levers or the model has no ``P``.
+    """
+    model = get_model()
+    multiplier = model.production_hours_multiplier
+    if not levers or multiplier is None or region not in model.regions:
+        return baseline, 0.0
+    delta_y = build_delta_final_demand(model, Scenario(levers=levers))
+    delta = float((multiplier @ delta_y)[model.regions.index(region)])
+    return baseline + delta, delta
+
+
+def _solve_value(
+    production_hours: float,
+    population: list[float],
+    target_weekly_hours: float,
+    solve_for: str,
+    params: WorkTimeParams,
+) -> float | None:
+    if solve_for == "non_employment_rate":
+        wap = working_age_population(population, params.start_age, params.retirement_age)
+        return solve_non_employment_rate(
+            production_hours, wap, target_weekly_hours, params.weeks_per_year
+        )
+    if solve_for == "retirement_age":
+        return solve_retirement_age(
+            production_hours,
+            population,
+            params.start_age,
+            params.non_employment_rate,
+            target_weekly_hours,
+            params.weeks_per_year,
+        )
+    if solve_for == "start_age":
+        return solve_start_age(
+            production_hours,
+            population,
+            params.retirement_age,
+            params.non_employment_rate,
+            target_weekly_hours,
+            params.weeks_per_year,
+        )
+    raise HTTPException(
+        status_code=422, detail="solve_for must be retirement_age | non_employment_rate | start_age"
+    )
+
+
+def _work_time_response(
+    region: str,
+    baseline: float,
+    adjusted: float,
+    delta: float,
+    population: list[float],
+    params: WorkTimeParams,
+) -> WorkTimeResponse:
+    result = work_time(region, adjusted, population, params)
+    return WorkTimeResponse(
+        region=region,
+        production_hours=adjusted,
+        baseline_production_hours=baseline,
+        production_hours_delta=delta,
+        working_age_population=result.working_age_population,
+        employed=result.employed,
+        weekly_hours_per_worker=result.weekly_hours_per_worker,
+    )
+
+
 @api.get("/labor", response_model=LaborCatalog)
 def labor_catalog() -> LaborCatalog:
     labor = _require_labor()
@@ -192,16 +267,24 @@ def labor_region(
     non_employment_rate: float = 0.20,
     weeks_per_year: float = 52.0,
 ) -> WorkTimeResponse:
-    production_hours, population = _region_population(region)
+    """Baseline work-time for a region (no scenario)."""
+    baseline, population = _region_population(region)
     params = WorkTimeParams(start_age, retirement_age, non_employment_rate, weeks_per_year)
-    result = work_time(region, production_hours, population, params)
-    return WorkTimeResponse(
-        region=region,
-        production_hours=result.production_hours,
-        working_age_population=result.working_age_population,
-        employed=result.employed,
-        weekly_hours_per_worker=result.weekly_hours_per_worker,
+    return _work_time_response(region, baseline, baseline, 0.0, population, params)
+
+
+@api.post("/labor/{region}/worktime", response_model=WorkTimeResponse)
+def labor_worktime(region: str, request: WorkTimeRequest) -> WorkTimeResponse:
+    """Work-time for a region under the current scenario (levers reduce hours)."""
+    baseline, population = _region_population(region)
+    adjusted, delta = _adjust_production_hours(region, baseline, request.levers)
+    params = WorkTimeParams(
+        request.start_age,
+        request.retirement_age,
+        request.non_employment_rate,
+        request.weeks_per_year,
     )
+    return _work_time_response(region, baseline, adjusted, delta, population, params)
 
 
 @api.get("/labor/{region}/solve", response_model=SolveResponse)
@@ -214,39 +297,37 @@ def labor_solve(
     non_employment_rate: float = 0.20,
     weeks_per_year: float = 52.0,
 ) -> SolveResponse:
-    production_hours, population = _region_population(region)
-    if solve_for == "non_employment_rate":
-        wap = working_age_population(population, start_age, retirement_age)
-        value = solve_non_employment_rate(
-            production_hours, wap, target_weekly_hours, weeks_per_year
-        )
-    elif solve_for == "retirement_age":
-        value = solve_retirement_age(
-            production_hours,
-            population,
-            start_age,
-            non_employment_rate,
-            target_weekly_hours,
-            weeks_per_year,
-        )
-    elif solve_for == "start_age":
-        value = solve_start_age(
-            production_hours,
-            population,
-            retirement_age,
-            non_employment_rate,
-            target_weekly_hours,
-            weeks_per_year,
-        )
-    else:
-        raise HTTPException(
-            status_code=422,
-            detail="solve_for must be retirement_age | non_employment_rate | start_age",
-        )
+    """Inverse solve on the baseline (no scenario)."""
+    baseline, population = _region_population(region)
+    params = WorkTimeParams(start_age, retirement_age, non_employment_rate, weeks_per_year)
+    value = _solve_value(baseline, population, target_weekly_hours, solve_for, params)
     return SolveResponse(
         region=region,
         solve_for=solve_for,
         target_weekly_hours=target_weekly_hours,
+        value=value,
+        feasible=value is not None,
+    )
+
+
+@api.post("/labor/{region}/solve", response_model=SolveResponse)
+def labor_solve_scenario(region: str, request: SolveRequest) -> SolveResponse:
+    """Inverse solve under the current scenario (adjusted production hours)."""
+    baseline, population = _region_population(region)
+    adjusted, _ = _adjust_production_hours(region, baseline, request.levers)
+    params = WorkTimeParams(
+        request.start_age,
+        request.retirement_age,
+        request.non_employment_rate,
+        request.weeks_per_year,
+    )
+    value = _solve_value(
+        adjusted, population, request.target_weekly_hours, request.solve_for, params
+    )
+    return SolveResponse(
+        region=region,
+        solve_for=request.solve_for,
+        target_weekly_hours=request.target_weekly_hours,
         value=value,
         feasible=value is not None,
     )
