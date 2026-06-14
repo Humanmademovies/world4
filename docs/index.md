@@ -19,6 +19,7 @@ well as solarpunk utopias — calibrated on serious projection scenarios.
 
 - [Leontief engine](modeling/leontief.md) — the maths of propagation.
 - [Parameters & anti-mathwashing](modeling/parameters.md) — every assumption is a sourced slider.
+- [Validation](validation.md) — binary checks against published figures (brick 1: France footprint).
 
 ## Data
 

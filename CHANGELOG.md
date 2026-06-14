@@ -6,6 +6,18 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added — Brick 1: real EXIOBASE wiring + France validation
+- Consumption-based footprint accounting: `consumption_footprint`, `per_capita`,
+  `FootprintEntry`, `RegionFootprint`.
+- `MrioModel.final_demand_by_region` (final demand by consuming region) and
+  `MrioModel.consuming_demand`, populated by the loader from EXIOBASE `Y`.
+- Binary validation on real EXIOBASE 3 (2022, pxp): engine reproduces pymrio's
+  `D_cba` to machine precision; France fossil-CO2 footprint (5.0 tCO2/cap) within
+  a sourced plausibility band anchored on SDES (9.2 tCO2eq/cap). Marked
+  `@pytest.mark.exiobase`, auto-skipped without data.
+- Docs: `docs/validation.md`, ADR 0005 (EXIOBASE 2022 pxp), EXIOBASE structure
+  notes (49 regions, 200 products, FR, extensions incl. employment hours+people).
+
 ### Added — Brick 0: engine seed
 - uv workspace (monorepo): `world4-core` engine + `world4-api` service + `apps/web`
   placeholder.

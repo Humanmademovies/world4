@@ -52,7 +52,11 @@ class MrioModel:
         sectors: ordered unique sector codes.
         index: the ``(region, sector)`` of each product column, length ``n``.
         leontief: the Leontief inverse ``L = (I - A)^-1``, shape ``(n, n)``.
-        final_demand: baseline total final demand per product, length ``n``.
+        final_demand: baseline total final demand per product, length ``n``
+            (summed over all *consuming* regions). Used by the scenario engine.
+        final_demand_by_region: final demand split by *consuming* region, shape
+            ``(n, n_regions)`` with columns aligned to ``regions``. Needed for
+            consumption-based (footprint) accounting. ``None`` if not loaded.
         extensions: satellite accounts keyed by name.
         name: human-readable model identifier.
     """
@@ -62,6 +66,7 @@ class MrioModel:
     index: list[Product]
     leontief: np.ndarray
     final_demand: np.ndarray
+    final_demand_by_region: np.ndarray | None = None
     extensions: dict[str, Extension] = field(default_factory=dict)
     name: str = "mrio"
 
@@ -69,6 +74,19 @@ class MrioModel:
     def n(self) -> int:
         """Number of products (region x sector)."""
         return len(self.index)
+
+    def consuming_demand(self, region: str) -> np.ndarray:
+        """Final demand consumed by ``region``, as a vector over all products.
+
+        This is the consumption-side slice of final demand (who *uses* the goods),
+        as opposed to :attr:`final_demand` which is summed over consumers. Needed
+        for consumption-based footprints.
+        """
+        if self.final_demand_by_region is None:
+            raise ValueError("final_demand_by_region not loaded; cannot compute footprints")
+        if region not in self.regions:
+            raise ValueError(f"unknown region {region!r}; known: {self.regions}")
+        return self.final_demand_by_region[:, self.regions.index(region)]
 
     def match_indices(self, sector: str, region: str | None = None) -> np.ndarray:
         """Return the integer positions matching a sector (and optional region).

@@ -28,9 +28,20 @@ The download is large and slow; it must **never** run in CI.
 uv run python -c "from world4_core.data import download_exiobase; download_exiobase(years=[2022], system='pxp')"
 ```
 
-This caches into `data/exiobase3/` (gitignored). `pxp` = product-by-product;
-`ixi` = industry-by-industry. The choice of version/year used for validation is
-an [ADR](../decisions/) decision made at brick 1.
+This caches into `data/exiobase3/` (gitignored, ~224 MB compressed). `pxp` =
+product-by-product; `ixi` = industry-by-industry. The reference dataset is
+**EXIOBASE 3, 2022, pxp** — see [ADR 0005](../decisions/0005-exiobase-pxp-2022.md)
+for why (and why `ixi` is deferred to the employment/industry brick).
+
+Structure of the 2022 pxp build (verified):
+
+- **49 regions** = 44 countries + 5 Rest-of-World (`WA`, `WL`, `WE`, `WF`, `WM`).
+  France is `FR`.
+- **200 products**.
+- **Extensions**: `employment` (hours *and* people, by skill × gender),
+  `air_emissions`, `energy`, `material`, `land`, `nutrients`, `water`,
+  `factor_inputs` — matching the seed's impact vector. Coverage is honestly
+  uneven (some stressors are NaN); see [validation.md](../validation.md).
 
 ## Loading it
 
