@@ -24,7 +24,8 @@ well as solarpunk utopias — calibrated on serious projection scenarios.
 
 ## Data
 
-- [EXIOBASE 3](data/exiobase.md) — the dataset, its licence, how to fetch it.
+- [Data catalog](data/datasets.md) — **everything** in every dataset (granularity, units, all indicators), with sources.
+- [EXIOBASE 3](data/exiobase.md) — how to fetch the MRIO + its structure.
 
 ## Decisions
 
