@@ -43,3 +43,28 @@ class SimResult(BaseModel):
     scenario: str
     model: str
     impacts: list[SimImpact] = Field(default_factory=list)
+
+
+class LaborCatalog(BaseModel):
+    year: int
+    regions: list[str] = Field(..., description="Region codes that have demography (labour view).")
+
+
+class WorkTimeResponse(BaseModel):
+    region: str
+    production_hours: float = Field(
+        ..., description="Hours/year the region must work (production)."
+    )
+    working_age_population: float
+    employed: float
+    weekly_hours_per_worker: float
+
+
+class SolveResponse(BaseModel):
+    region: str
+    solve_for: str
+    target_weekly_hours: float
+    value: float | None = Field(
+        ..., description="Solved value, or null if the target is infeasible."
+    )
+    feasible: bool
