@@ -78,7 +78,7 @@ pxp file:
 | **factor_inputs** | 9 | `M.EUR` | value added: taxes less subsidies on products, other net taxes, compensation of employees (by skill), operating surplus & mixed income |
 
 Full per-stressor lists: [all products & industries](exiobase-sectors.md) ·
-[all 420 air + 194 water stressors](exiobase-stressors-air-water.md).
+[all 733 stressors across the 8 extensions](exiobase-stressors.md).
 
 For each extension pymrio also derives, after computation: `S` (intensity per unit
 output), `M` (multipliers `S·L`), and `D_pba`/`D_cba` (production- and

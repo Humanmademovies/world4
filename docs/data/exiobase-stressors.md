@@ -1,16 +1,47 @@
-# EXIOBASE 3 — air-emission & water stressors (full lists)
+# EXIOBASE 3 — all satellite-account stressors (exhaustive)
 
-Every stressor in the **air_emissions** and **water** satellite accounts of EXIOBASE 3 (2022, pxp), with its unit. These attach to every region × product.
+Every indicator in every EXIOBASE 3 satellite account (2022, pxp), with its unit. Each attaches to all 49 regions × 200 products. See also the [sector lists](exiobase-sectors.md) and the [data catalog](datasets.md).
 
-**Source:** read directly from the EXIOBASE 3 file `IOT_2022_pxp.zip` (Zenodo DOI [10.5281/zenodo.3583070](https://doi.org/10.5281/zenodo.3583070)) via pymrio 0.6.3. Generated from the data.
+**Source:** read directly from `IOT_2022_pxp.zip` (Zenodo DOI [10.5281/zenodo.3583070](https://doi.org/10.5281/zenodo.3583070)) via pymrio 0.6.3. Generated from the data.
 
 
-## air_emissions — 420 stressors
+| Extension | # | Units |
+| --- | ---: | --- |
+| [employment](#employment) | 12 | 1000 p ×6, M.hr ×6 |
+| [air_emissions](#air_emissions) | 420 | kg ×418, kg CO2-eq ×2 |
+| [energy](#energy) | 4 | TJ ×4 |
+| [material](#material) | 62 | kt ×62 |
+| [water](#water) | 194 | Mm3 ×194 |
+| [land](#land) | 26 | km2 ×26 |
+| [nutrients](#nutrients) | 6 | kg ×6 |
+| [factor_inputs](#factor_inputs) | 9 | M.EUR ×9 |
 
-Naming pattern: **`Substance - Source - air`** (e.g. `CO2 - combustion - air`). A few gases have no source token (e.g. `SF6 - air`). The two `kg CO2-eq` rows are GWP-weighted greenhouse-gas totals; everything else is a physical mass in `kg`.
+## employment
 
-- Units: {'kg': 418, 'kg CO2-eq': 2}
-- Distinct substances: 37
+<a id="employment"></a>Jobs **and** hours worked, split by skill (low / medium / high) × sex. 6 rows in `1000 p` (thousand persons) and 6 in `M.hr` (million hours).
+
+- 12 stressors · units: 1000 p ×6, M.hr ×6
+
+| # | Stressor | Unit |
+| ---: | --- | --- |
+| 1 | Employment people: Low-skilled male | 1000 p |
+| 2 | Employment people: Low-skilled female | 1000 p |
+| 3 | Employment people: Medium-skilled male | 1000 p |
+| 4 | Employment people: Medium-skilled female | 1000 p |
+| 5 | Employment people: High-skilled male | 1000 p |
+| 6 | Employment people: High-skilled female | 1000 p |
+| 7 | Employment hours: Low-skilled male | M.hr |
+| 8 | Employment hours: Low-skilled female | M.hr |
+| 9 | Employment hours: Medium-skilled male | M.hr |
+| 10 | Employment hours: Medium-skilled female | M.hr |
+| 11 | Employment hours: High-skilled male | M.hr |
+| 12 | Employment hours: High-skilled female | M.hr |
+
+## air_emissions
+
+<a id="air_emissions"></a>Pattern `Substance - Source - air` (e.g. `CO2 - combustion - air`); a few gases have no source token. The two `kg CO2-eq` rows are GWP-weighted GHG totals.
+
+- 420 stressors · units: kg ×418, kg CO2-eq ×2
 - By source: non combustion (373), combustion (31), waste (8), agriculture (5), (unspecified) (3)
 
 | # | Stressor | Unit |
@@ -436,10 +467,95 @@ Naming pattern: **`Substance - Source - air`** (e.g. `CO2 - combustion - air`). 
 | 419 | PM2.5 - waste - air | kg |
 | 420 | SOx - waste - air | kg |
 
-## water — 194 stressors
+## energy
 
-Naming pattern: **`Water <Metric> <Colour> - Use - detail`** (e.g. `Water Consumption Blue - Agriculture - rice`). *Consumption* = water evaporated/incorporated (not returned); *Withdrawal* = water abstracted (some returned). *Green* = rainwater in soil; *Blue* = surface/ground water. All in `Mm3` (million m³).
+<a id="energy"></a>Total energy use at four accounting boundaries: Emission-relevant / Final / Gross / Net.
 
+- 4 stressors · units: TJ ×4
+
+| # | Stressor | Unit |
+| ---: | --- | --- |
+| 1 | Energy use - Emission relevant | TJ |
+| 2 | Energy use - Final | TJ |
+| 3 | Energy use - Gross | TJ |
+| 4 | Energy use - Net | TJ |
+
+## material
+
+<a id="material"></a>Domestic Extraction Used (DEU): biomass (crops, residues, grazing, wood, fish), metal ores, non-metallic minerals, fossil fuels.
+
+- 62 stressors · units: kt ×62
+
+| # | Stressor | Unit |
+| ---: | --- | --- |
+| 1 | Domestic Extraction Used - Primary Crops - Rice | kt |
+| 2 | Domestic Extraction Used - Primary Crops - Wheat | kt |
+| 3 | Domestic Extraction Used - Primary Crops - Cereals n.e.c. | kt |
+| 4 | Domestic Extraction Used - Primary Crops - Roots and tubers | kt |
+| 5 | Domestic Extraction Used - Primary Crops - Pulses | kt |
+| 6 | Domestic Extraction Used - Primary Crops - Nuts | kt |
+| 7 | Domestic Extraction Used - Primary Crops - Vegetables | kt |
+| 8 | Domestic Extraction Used - Primary Crops - Fruits | kt |
+| 9 | Domestic Extraction Used - Primary Crops - Oil bearing crops | kt |
+| 10 | Domestic Extraction Used - Primary Crops - Sugar crops | kt |
+| 11 | Domestic Extraction Used - Primary Crops - Fibres | kt |
+| 12 | Domestic Extraction Used - Primary Crops - Spice - beverage - pharmaceutical crops | kt |
+| 13 | Domestic Extraction Used - Primary Crops - Tobacco | kt |
+| 14 | Domestic Extraction Used - Crop residues - Straw | kt |
+| 15 | Domestic Extraction Used - Crop residues - Other crop residues (sugar and fodder beet leaves etc) | kt |
+| 16 | Domestic Extraction Used - Fodder crops (including biomass harvest from grassland) | kt |
+| 17 | Domestic Extraction Used - Grazed biomass | kt |
+| 18 | Domestic Extraction Used - Forestry - Other crops n.e.c | kt |
+| 19 | Domestic Extraction Used - Forestry - Timber (Industrial roundwood) | kt |
+| 20 | Domestic Extraction Used - Forestry - Wood fuel and other extraction | kt |
+| 21 | Domestic Extraction Used - Fishery - Wild fish catch | kt |
+| 22 | Domestic Extraction Used - Fishery - All other aquatic animals | kt |
+| 23 | Domestic Extraction Used - Fishery - Aquatic plants | kt |
+| 24 | Domestic Extraction Used - Fossil Fuels - Anthracite | kt |
+| 25 | Domestic Extraction Used - Fossil Fuels - Coking Coal | kt |
+| 26 | Domestic Extraction Used - Fossil Fuels - Other Bituminous Coal | kt |
+| 27 | Domestic Extraction Used - Fossil Fuels - Other Sub-Bituminous Coal | kt |
+| 28 | Domestic Extraction Used - Fossil Fuels - Lignite (brown coal) | kt |
+| 29 | Domestic Extraction Used - Fossil Fuels - Peat | kt |
+| 30 | Domestic Extraction Used - Fossil Fuels - Crude oil | kt |
+| 31 | Domestic Extraction Used - Fossil Fuels - Oil shale and tar sands | kt |
+| 32 | Domestic Extraction Used - Fossil Fuels - Natural gas | kt |
+| 33 | Domestic Extraction Used - Fossil Fuels - Natural gas liquids | kt |
+| 34 | Domestic Extraction Used - Metal Ores - Uranium ores | kt |
+| 35 | Domestic Extraction Used - Metal Ores - Iron ores | kt |
+| 36 | Domestic Extraction Used - Metal Ores - Copper ores | kt |
+| 37 | Domestic Extraction Used - Metal Ores - Nickel ores | kt |
+| 38 | Domestic Extraction Used - Metal Ores - Bauxite and other aluminium ores - gross ore | kt |
+| 39 | Domestic Extraction Used - Metal Ores - Silver ores | kt |
+| 40 | Domestic Extraction Used - Metal Ores - Gold ores | kt |
+| 41 | Domestic Extraction Used - Metal Ores - Platinum group metal ores | kt |
+| 42 | Domestic Extraction Used - Metal Ores - Lead ores | kt |
+| 43 | Domestic Extraction Used - Metal Ores - Tin ores | kt |
+| 44 | Domestic Extraction Used - Metal Ores - Zinc ores | kt |
+| 45 | Domestic Extraction Used - Metal Ores - Chromium ores | kt |
+| 46 | Domestic Extraction Used - Metal Ores - Manganese ores | kt |
+| 47 | Domestic Extraction Used - Metal Ores - Other metal ores | kt |
+| 48 | Domestic Extraction Used - Metal Ores - Titanium ores | kt |
+| 49 | Domestic Extraction Used - Non-Metallic Minerals - Ornamental or building stone | kt |
+| 50 | Domestic Extraction Used - Non-Metallic Minerals - Chalk | kt |
+| 51 | Domestic Extraction Used - Non-Metallic Minerals - Dolomite | kt |
+| 52 | Domestic Extraction Used - Non-Metallic Minerals - Limestone | kt |
+| 53 | Domestic Extraction Used - Non-Metallic Minerals - Gypsum | kt |
+| 54 | Domestic Extraction Used - Non-Metallic Minerals - Structural clays | kt |
+| 55 | Domestic Extraction Used - Non-Metallic Minerals - Specialty clays | kt |
+| 56 | Domestic Extraction Used - Non-Metallic Minerals - Industrial sand and gravel | kt |
+| 57 | Domestic Extraction Used - Non-Metallic Minerals - Sand gravel and crushed rock for construction | kt |
+| 58 | Domestic Extraction Used - Non-Metallic Minerals - Fertilizer minerals n.e.c. | kt |
+| 59 | Domestic Extraction Used - Non-Metallic Minerals - Chemical minerals n.e.c. | kt |
+| 60 | Domestic Extraction Used - Non-Metallic Minerals - Industrial minerals n.e.c | kt |
+| 61 | Domestic Extraction Used - Non-Metallic Minerals - Salt | kt |
+| 62 | Domestic Extraction Used - Non-Metallic Minerals - Other non-metallic minerals n.e.c. | kt |
+
+## water
+
+<a id="water"></a>Pattern `Water <Metric> <Colour> - Use - detail`. *Consumption* = water not returned; *Withdrawal* = abstracted (partly returned). *Green* = soil rainwater; *Blue* = surface/ground water.
+
+- 194 stressors · units: Mm3 ×194
 - By metric/colour: Water Consumption Blue (103), Water Withdrawal Blue (78), Water Consumption Green (13)
 - By use: Manufacturing (106), Electricity (48), Agriculture (26), Livestock (12), Domestic (2)
 
@@ -639,3 +755,71 @@ Naming pattern: **`Water <Metric> <Colour> - Use - detail`** (e.g. `Water Consum
 | 192 | Water Withdrawal Blue - Electricity - once-through - Electricity by Geothermal | Mm3 |
 | 193 | Water Withdrawal Blue - Electricity - once-through - Electricity nec | Mm3 |
 | 194 | Water Withdrawal Blue - Domestic - domestic Water Withdrawal Blue | Mm3 |
+
+## land
+
+<a id="land"></a>Land occupation by type: artificial surfaces, cropland (per crop), pasture, forest, etc.
+
+- 26 stressors · units: km2 ×26
+
+| # | Stressor | Unit |
+| ---: | --- | --- |
+| 1 | Artificial Surfaces | km2 |
+| 2 | Cropland - cropped area - Cereal grains nec | km2 |
+| 3 | Cropland - cropped area - Crops nec | km2 |
+| 4 | Cropland - cropped area - Oil seeds | km2 |
+| 5 | Cropland - cropped area - Paddy rice | km2 |
+| 6 | Cropland - cropped area - Plant-based fibers | km2 |
+| 7 | Cropland - cropped area - Sugar cane, sugar beet | km2 |
+| 8 | Cropland - cropped area - Vegetables, fruit, nuts | km2 |
+| 9 | Cropland - cropped area - Wheat | km2 |
+| 10 | Cropland - fallowed area - Cereal grains nec | km2 |
+| 11 | Cropland - fallowed area - Crops nec | km2 |
+| 12 | Cropland - fallowed area - Oil seeds | km2 |
+| 13 | Cropland - fallowed area - Paddy rice | km2 |
+| 14 | Cropland - fallowed area - Plant-based fibers | km2 |
+| 15 | Cropland - fallowed area - Sugar cane, sugar beet | km2 |
+| 16 | Cropland - fallowed area - Vegetables, fruit, nuts | km2 |
+| 17 | Cropland - fallowed area - Wheat | km2 |
+| 18 | Cropland - fallowed area-Cattle | km2 |
+| 19 | Cropland - fallowed area-Meat animals nec | km2 |
+| 20 | Cropland - fallowed area-Pigs | km2 |
+| 21 | Cropland - fallowed area-Poultry | km2 |
+| 22 | Cropland - fallowed area-Raw milk | km2 |
+| 23 | Forest | km2 |
+| 24 | Permanent pastures - Grazing-Cattle | km2 |
+| 25 | Permanent pastures - Grazing-Meat animals nec | km2 |
+| 26 | Permanent pastures - Grazing-Raw milk | km2 |
+
+## nutrients
+
+<a id="nutrients"></a>Nitrogen (N) and phosphorus (P) releases to soil and water (agriculture).
+
+- 6 stressors · units: kg ×6
+
+| # | Stressor | Unit |
+| ---: | --- | --- |
+| 1 | N - agriculture - water | kg |
+| 2 | P - agriculture - soil | kg |
+| 3 | P - agriculture - water | kg |
+| 4 | Pxx - agriculture - soil | kg |
+| 5 | N - waste - water | kg |
+| 6 | P - waste - water | kg |
+
+## factor_inputs
+
+<a id="factor_inputs"></a>Monetary value-added components: taxes less subsidies on products, other net taxes on production, compensation of employees (by skill), operating surplus & mixed income.
+
+- 9 stressors · units: M.EUR ×9
+
+| # | Stressor | Unit |
+| ---: | --- | --- |
+| 1 | Taxes less subsidies on products purchased: Total | M.EUR |
+| 2 | Other net taxes on production | M.EUR |
+| 3 | Compensation of employees; wages, salaries, & employers' social contributions: Low-skilled | M.EUR |
+| 4 | Compensation of employees; wages, salaries, & employers' social contributions: Medium-skilled | M.EUR |
+| 5 | Compensation of employees; wages, salaries, & employers' social contributions: High-skilled | M.EUR |
+| 6 | Operating surplus: Consumption of fixed capital | M.EUR |
+| 7 | Operating surplus: Rents on land | M.EUR |
+| 8 | Operating surplus: Royalties on resources | M.EUR |
+| 9 | Operating surplus: Remaining net operating surplus | M.EUR |

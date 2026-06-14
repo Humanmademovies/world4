@@ -26,7 +26,7 @@ well as solarpunk utopias — calibrated on serious projection scenarios.
 
 - [Data catalog](data/datasets.md) — **everything** in every dataset (granularity, units, all indicators), with sources.
 - [EXIOBASE sector lists](data/exiobase-sectors.md) — all 200 products (pxp) + 163 industries (ixi), with codes & ISIC.
-- [EXIOBASE air & water stressors](data/exiobase-stressors-air-water.md) — all 420 air + 194 water stressors, with units.
+- [EXIOBASE stressors](data/exiobase-stressors.md) — all 733 satellite-account indicators (8 extensions), with units.
 - [EXIOBASE 3](data/exiobase.md) — how to fetch the MRIO + its structure.
 
 ## Decisions
