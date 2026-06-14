@@ -70,3 +70,60 @@ export async function simulate(levers: Lever[]): Promise<SimResult> {
   if (!response.ok) throw new Error(`${response.status} on POST /simulate`);
   return response.json() as Promise<SimResult>;
 }
+
+// --- Work-time (labour) -----------------------------------------------------
+
+export interface LaborCatalog {
+  year: number;
+  regions: string[]; // region codes that have demography
+}
+
+export interface WorkTimeParams {
+  start_age: number;
+  retirement_age: number;
+  non_employment_rate: number;
+  weeks_per_year: number;
+}
+
+export interface WorkTime {
+  region: string;
+  production_hours: number;
+  working_age_population: number;
+  employed: number;
+  weekly_hours_per_worker: number;
+}
+
+export type SolveFor = "retirement_age" | "non_employment_rate" | "start_age";
+
+export interface SolveResult {
+  region: string;
+  solve_for: SolveFor;
+  target_weekly_hours: number;
+  value: number | null;
+  feasible: boolean;
+}
+
+export const getLaborCatalog = () => getJson<LaborCatalog>("/labor");
+
+function query(params: Record<string, string | number>): string {
+  return new URLSearchParams(
+    Object.fromEntries(Object.entries(params).map(([k, v]) => [k, String(v)])),
+  ).toString();
+}
+
+export const getWorkTime = (region: string, p: WorkTimeParams) =>
+  getJson<WorkTime>(`/labor/${encodeURIComponent(region)}?${query({ ...p })}`);
+
+export const solveWorkTime = (
+  region: string,
+  targetWeeklyHours: number,
+  solveFor: SolveFor,
+  p: WorkTimeParams,
+) =>
+  getJson<SolveResult>(
+    `/labor/${encodeURIComponent(region)}/solve?${query({
+      target_weekly_hours: targetWeeklyHours,
+      solve_for: solveFor,
+      ...p,
+    })}`,
+  );
