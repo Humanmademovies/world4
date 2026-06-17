@@ -8,9 +8,10 @@ interface Props {
   selectedRegion: string | null;
   levers: Lever[];
   onChange: (levers: Lever[]) => void;
+  onHelp?: () => void;
 }
 
-export function Controls({ sectors, regions, selectedRegion, levers, onChange }: Props) {
+export function Controls({ sectors, regions, selectedRegion, levers, onChange, onHelp }: Props) {
   const [sector, setSector] = useState("");
   const [scope, setScope] = useState<string>("");
 
@@ -37,7 +38,10 @@ export function Controls({ sectors, regions, selectedRegion, levers, onChange }:
 
   return (
     <section className="controls">
-      <h2>Demand-reduction levers</h2>
+      <h2>
+        Demand-reduction levers
+        {onHelp && <button className="help-btn" onClick={onHelp} title="Guide">?</button>}
+      </h2>
       <p className="hint">
         Reductions only — the seed never adds demand. Pick a sector, optionally scope it to a
         region, then set how much of its final demand to remove.

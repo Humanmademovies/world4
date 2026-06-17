@@ -7,6 +7,7 @@ interface Props {
   available: boolean; // region has demography (per-capita possible)
   impacts: ImpactInfo[]; // full impact catalog, to flag those without a target
   targetKeys: string[]; // impact keys that have a sourced target
+  onHelp?: () => void;
 }
 
 const CO2_PRESETS = [
@@ -41,7 +42,7 @@ function Row({ item }: { item: RegionTargetItem }) {
   );
 }
 
-export function TargetsPanel({ region, available, impacts, targetKeys }: Props) {
+export function TargetsPanel({ region, available, impacts, targetKeys, onHelp }: Props) {
   const [items, setItems] = useState<RegionTargetItem[]>([]);
   const [co2Preset, setCo2Preset] = useState("2C");
 
@@ -60,7 +61,10 @@ export function TargetsPanel({ region, available, impacts, targetKeys }: Props) 
   if (!usable) {
     return (
       <section className="targets">
-        <h2>Targets</h2>
+        <h2>
+          Targets
+          {onHelp && <button className="help-btn" onClick={onHelp} title="Guide">?</button>}
+        </h2>
         <p className="hint">Click a country with demography to see each limit vs its fair-share target.</p>
       </section>
     );
@@ -70,7 +74,10 @@ export function TargetsPanel({ region, available, impacts, targetKeys }: Props) 
 
   return (
     <section className="targets">
-      <h2>Targets — {region}</h2>
+      <h2>
+        Targets — {region}
+        {onHelp && <button className="help-btn" onClick={onHelp} title="Guide">?</button>}
+      </h2>
       <label className="tg-preset">
         Carbon ambition:{" "}
         <select value={co2Preset} onChange={(e) => setCo2Preset(e.target.value)}>

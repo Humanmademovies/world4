@@ -117,3 +117,9 @@ class RegionTargetItem(BaseModel):
 class RegionTargets(BaseModel):
     region: str
     items: list[RegionTargetItem] = Field(default_factory=list)
+
+
+class SectorInfo(BaseModel):
+    sector: str
+    code: str
+    category: str

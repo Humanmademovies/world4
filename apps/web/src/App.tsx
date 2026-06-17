@@ -17,7 +17,9 @@ import { Controls } from "./components/Controls";
 import { ImpactPanels } from "./components/ImpactPanels";
 import { LaborPanel } from "./components/LaborPanel";
 import { TargetsPanel } from "./components/TargetsPanel";
+import { WikiDrawer, type WikiTarget } from "./components/WikiDrawer";
 import { WorldMap } from "./components/WorldMap";
+import type { Lang } from "./content/wiki";
 import { coverageColor, fmtValue, RAMP } from "./format";
 
 const NO_GEOMETRY = "Rest-of-World aggregates (WA, WL, WE, WF, WM) and Malta have no map geometry.";
@@ -34,7 +36,15 @@ export function App() {
   const [globe, setGlobe] = useState(false);
   const [laborRegions, setLaborRegions] = useState<string[]>([]);
   const [targetKeys, setTargetKeys] = useState<string[]>([]);
+  const [wikiOpen, setWikiOpen] = useState(false);
+  const [wikiTarget, setWikiTarget] = useState<WikiTarget | null>(null);
+  const [wikiLang, setWikiLang] = useState<Lang>("fr");
   const [error, setError] = useState<string | null>(null);
+
+  const openWiki = (target: WikiTarget) => {
+    setWikiTarget(target);
+    setWikiOpen(true);
+  };
 
   // Initial load.
   useEffect(() => {
@@ -93,6 +103,9 @@ export function App() {
           <span className="model">{info.name}</span>
         </div>
         <div className="topbar-controls">
+          <button className="guide-btn" onClick={() => openWiki({ kind: "page", slug: "overview" })}>
+            📖 Guide
+          </button>
           <label>
             Map impact:{" "}
             <select value={mapImpact} onChange={(e) => setMapImpact(e.target.value)}>
@@ -163,21 +176,33 @@ export function App() {
             selectedRegion={selectedRegion}
             levers={levers}
             onChange={setLevers}
+            onHelp={() => openWiki({ kind: "page", slug: "levers" })}
           />
           <LaborPanel
             region={selectedRegion}
             available={selectedRegion !== null && laborRegions.includes(selectedRegion)}
             levers={levers}
+            onHelp={() => openWiki({ kind: "page", slug: "work-time" })}
           />
           <TargetsPanel
             region={selectedRegion}
             available={selectedRegion !== null && laborRegions.includes(selectedRegion)}
             impacts={impacts}
             targetKeys={targetKeys}
+            onHelp={() => openWiki({ kind: "page", slug: "targets" })}
           />
           <ImpactPanels impacts={sim?.impacts ?? []} loading={simLoading} />
         </aside>
       </main>
+
+      <WikiDrawer
+        open={wikiOpen}
+        onClose={() => setWikiOpen(false)}
+        lang={wikiLang}
+        onLang={setWikiLang}
+        region={selectedRegion}
+        target={wikiTarget}
+      />
     </div>
   );
 }

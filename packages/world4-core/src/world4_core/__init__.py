@@ -35,6 +35,7 @@ from world4_core.model import ImpactTotal, Lever, Scenario, ScenarioResult
 from world4_core.mrio import Extension, MrioModel
 from world4_core.serialize import load_model, save_model
 from world4_core.targets import Target, TargetAssessment, assess, available_targets, get_target
+from world4_core.wiki import SectorDriver, SectorProfile, sector_metadata, sector_profile
 
 __version__ = "0.1.0"
 
@@ -49,6 +50,8 @@ __all__ = [
     "RegionLabor",
     "Scenario",
     "ScenarioResult",
+    "SectorDriver",
+    "SectorProfile",
     "Target",
     "TargetAssessment",
     "WorkTimeParams",
@@ -69,6 +72,8 @@ __all__ = [
     "run_scenario",
     "save_labor_inputs",
     "save_model",
+    "sector_metadata",
+    "sector_profile",
     "solve_non_employment_rate",
     "solve_retirement_age",
     "solve_start_age",

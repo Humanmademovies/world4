@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added — In-app wiki (Guide drawer)
+- A left **Guide** drawer making the dashboard self-explanatory: bilingual (FR/EN)
+  narrative pages (overview, levers, work-time, targets, glossary) + a live
+  **sector explorer**. A `?` on each panel deep-links to the matching page.
+- Computed, data-driven sector profiles (`world4_core.wiki.sector_profile`): for the
+  selected country, the share of each footprint a sector drives (ranked) and the
+  labour it ties up — honest, never hand-faked. API: `GET /api/wiki/sectors`,
+  `GET /api/wiki/sector/{sector}?region=`.
+- Bundled EXIOBASE sector metadata (`world4_core/data/sectors_pxp.json`).
+- Docs: `docs/wiki.md`. Narrative content under `apps/web/src/content/wiki/{en,fr}/`.
+
 ### Added — Brick 3: sourced sustainability targets
 - `world4_core.targets`: a sourced per-capita boundary registry (CO2 with 2 °C +
   1.5° presets, blue water 574 m³, material 7.2 t — O'Neill et al. 2018 + Hot or

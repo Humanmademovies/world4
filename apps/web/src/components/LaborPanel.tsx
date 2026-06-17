@@ -14,6 +14,7 @@ interface Props {
   region: string | null;
   available: boolean; // region has demography (labour view possible)
   levers: Lever[]; // current demand-reduction scenario
+  onHelp?: () => void;
 }
 
 const DEFAULTS: WorkTimeParams = {
@@ -48,7 +49,7 @@ function Slider(props: {
   );
 }
 
-export function LaborPanel({ region, available, levers }: Props) {
+export function LaborPanel({ region, available, levers, onHelp }: Props) {
   const [params, setParams] = useState<WorkTimeParams>(DEFAULTS);
   const [forward, setForward] = useState<WorkTime | null>(null);
   const [target, setTarget] = useState(32);
@@ -85,7 +86,10 @@ export function LaborPanel({ region, available, levers }: Props) {
   if (!usable) {
     return (
       <section className="labor">
-        <h2>Work time</h2>
+        <h2>
+          Work time
+          {onHelp && <button className="help-btn" onClick={onHelp} title="Guide">?</button>}
+        </h2>
         <p className="hint">
           Click a country with demography on the map to explore its work-time trade-offs.
         </p>
@@ -103,7 +107,10 @@ export function LaborPanel({ region, available, levers }: Props) {
 
   return (
     <section className="labor">
-      <h2>Work time — {region}</h2>
+      <h2>
+        Work time — {region}
+        {onHelp && <button className="help-btn" onClick={onHelp} title="Guide">?</button>}
+      </h2>
 
       <Slider label="Start age" value={params.start_age} min={14} max={30} step={1}
         fmt={(v) => `${v}`} onChange={(v) => set({ start_age: v })} />
