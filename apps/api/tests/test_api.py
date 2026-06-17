@@ -70,9 +70,7 @@ def test_targets_catalog() -> None:
 
 
 def test_labor_endpoints(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
-    # No labour artifact configured -> 404.
-    monkeypatch.delenv("WORLD4_LABOR_PATH", raising=False)
-    get_labor.cache_clear()
+    # Default (autouse fixture) points at a non-existent labour path -> 404.
     assert client.get("/api/labor").status_code == 404
 
     # Configure a tiny artifact: production = 4500*52*40 -> 40 h/week at 20..65, n=0.

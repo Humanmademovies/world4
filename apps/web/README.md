@@ -14,18 +14,19 @@ Stack: **React + TypeScript + Vite**, map via **MapLibre GL JS** (2D + globe).
 uv run world4 build-model --exiobase data/exiobase3/IOT_2022_pxp.zip \
     --out data/models/exiobase_2022_pxp.npz
 
-# 2. start the API (serves the artifact if WORLD4_MODEL_PATH is set, else test model):
-WORLD4_MODEL_PATH=data/models/exiobase_2022_pxp.npz uv run world4-api
+# 2. start the API (auto-loads data/models + data/labor if present; port 8537):
+uv run world4-api
 
-# 3a. dev (hot reload; Vite proxies /api to the API):
+# 3a. dev (hot reload; Vite proxies /api to the API, following WORLD4_API_PORT):
 cd apps/web && npm install && npm run dev
 
 # 3b. or build + let FastAPI serve it at the API origin:
 cd apps/web && npm install && npm run build   # emits dist/, served by world4-api at /
 ```
 
-> Note: port 8000 is reserved on some Windows setups — set `WORLD4_API_PORT` (and
-> update `vite.config.ts`'s proxy) if needed.
+> Note: the API defaults to port **8537** (8000 is often reserved/forwarded on
+> Windows). The Vite dev proxy follows `WORLD4_API_PORT` (default 8537), so set the
+> same value in both terminals if you change it.
 
 ## What it shows
 

@@ -58,20 +58,28 @@ from world4_core import (
 from world4_core.engine import build_delta_final_demand
 from world4_core.impacts import available_impacts, impact_by_region, impact_value
 
+# Default artifact locations (repo-root relative), used when the env vars are unset.
+# So `uv run world4-api` from the repo just works if the artifacts have been built;
+# otherwise it falls back to the synthetic test model (keeps CI/fresh clones offline).
+_REPO_ROOT = Path(__file__).resolve().parents[4]
+DEFAULT_MODEL_PATH = _REPO_ROOT / "data" / "models" / "exiobase_2022_pxp.npz"
+DEFAULT_LABOR_PATH = _REPO_ROOT / "data" / "labor" / "labor_inputs_2022.json"
+DEFAULT_API_PORT = "8537"  # 8000 is often reserved/forwarded on Windows (see docs)
+
 
 @lru_cache(maxsize=1)
 def get_model() -> MrioModel:
-    path = os.getenv("WORLD4_MODEL_PATH")
-    if path and Path(path).exists():
+    path = Path(os.getenv("WORLD4_MODEL_PATH") or DEFAULT_MODEL_PATH)
+    if path.exists():
         return load_model(path)
     return load_test_model()
 
 
 @lru_cache(maxsize=1)
 def get_labor() -> LaborInputs | None:
-    """Load the labour-inputs artifact if configured, else None (no labour view)."""
-    path = os.getenv("WORLD4_LABOR_PATH")
-    if path and Path(path).exists():
+    """Load the labour-inputs artifact (env override, else the default path)."""
+    path = Path(os.getenv("WORLD4_LABOR_PATH") or DEFAULT_LABOR_PATH)
+    if path.exists():
         return load_labor_inputs(path)
     return None
 
@@ -433,5 +441,5 @@ def run() -> None:  # pragma: no cover - thin uvicorn entrypoint
     uvicorn.run(
         app,
         host=os.getenv("WORLD4_API_HOST", "127.0.0.1"),
-        port=int(os.getenv("WORLD4_API_PORT", "8000")),
+        port=int(os.getenv("WORLD4_API_PORT", DEFAULT_API_PORT)),
     )

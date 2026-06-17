@@ -35,16 +35,20 @@ uv sync                                   # create the env, install the workspac
 uv run pytest                             # run the test suite
 uv run world4 info                        # inspect the test model
 uv run world4 demo --sector food --reduction 0.5   # propagate a reduction
-uv run world4-api                         # serve the HTTP API at http://127.0.0.1:8000/docs
+uv run world4-api                         # serve the HTTP API at http://127.0.0.1:8537/docs
 ```
 
-Dashboard on real data (after downloading EXIOBASE — see
-[docs/data/exiobase.md](docs/data/exiobase.md)):
+The API defaults to port **8537** and auto-loads the local artifacts under `data/`
+if present (else the test model). Dashboard on real data (after downloading
+EXIOBASE — see [docs/data/exiobase.md](docs/data/exiobase.md)):
 
 ```bash
 uv run world4 build-model --exiobase data/exiobase3/IOT_2022_pxp.zip \
     --out data/models/exiobase_2022_pxp.npz          # precompute once
-WORLD4_MODEL_PATH=data/models/exiobase_2022_pxp.npz uv run world4-api
+uv run world4 build-labor --exiobase data/exiobase3/IOT_2022_pxp.zip \
+    --wpp data/demography/WPP2024_SingleAge_1950-2023.csv.gz \
+    --out data/labor/labor_inputs_2022.json          # demography (for work-time/targets)
+uv run world4-api                                    # auto-loads both, port 8537
 cd apps/web && npm install && npm run dev            # open the dashboard
 ```
 
