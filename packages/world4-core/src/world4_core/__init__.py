@@ -34,6 +34,7 @@ from world4_core.labor import (
 from world4_core.model import ImpactTotal, Lever, Scenario, ScenarioResult
 from world4_core.mrio import Extension, MrioModel
 from world4_core.serialize import load_model, save_model
+from world4_core.targets import Target, TargetAssessment, assess, available_targets, get_target
 
 __version__ = "0.1.0"
 
@@ -48,11 +49,16 @@ __all__ = [
     "RegionLabor",
     "Scenario",
     "ScenarioResult",
+    "Target",
+    "TargetAssessment",
     "WorkTimeParams",
     "WorkTimeResult",
     "__version__",
+    "assess",
+    "available_targets",
     "build_delta_final_demand",
     "consumption_footprint",
+    "get_target",
     "leontief_inverse",
     "load_exiobase_model",
     "load_labor_inputs",

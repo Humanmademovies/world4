@@ -68,8 +68,17 @@ n% / start age). When you pull industry levers, the panel reflects the
 **scenario-adjusted** production hours and shows the **hours freed**. See
 [work-time](modeling/work-time.md).
 
+## Targets panel (brick 3)
+
+Click a country to also see its **Targets** panel: each limit's per-capita footprint
+vs a **sourced fair-share boundary** (O'Neill 2018 + Hot or Cool), with the overshoot
+ratio, overshoot day, and a carbon ambition selector (2 °C / 1.5° 2030 / 1.5° 2050).
+No aggregate index; land and energy are shown as *"no per-capita planetary boundary"*
+rather than given an invented target. Footprint (rigorous) and target (sourced,
+contestable) are kept visually distinct. See [targets-sources](modeling/targets-sources.md).
+
 ## Not yet (later bricks)
 
-- Sustainability **target** lines per impact (brick 3) — targets must be sourced first.
 - Attributing scenario Δ to consuming regions on the map (currently the map shows the
   baseline; panels show global Δ).
+- Brick 5 (anti-mathwashing demand-composition parameters).

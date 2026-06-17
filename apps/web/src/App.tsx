@@ -5,6 +5,7 @@ import {
   getImpacts,
   getLaborCatalog,
   getModelInfo,
+  getTargetsCatalog,
   simulate,
   type ImpactInfo,
   type Lever,
@@ -15,6 +16,7 @@ import {
 import { Controls } from "./components/Controls";
 import { ImpactPanels } from "./components/ImpactPanels";
 import { LaborPanel } from "./components/LaborPanel";
+import { TargetsPanel } from "./components/TargetsPanel";
 import { WorldMap } from "./components/WorldMap";
 import { coverageColor, fmtValue, RAMP } from "./format";
 
@@ -31,6 +33,7 @@ export function App() {
   const [simLoading, setSimLoading] = useState(false);
   const [globe, setGlobe] = useState(false);
   const [laborRegions, setLaborRegions] = useState<string[]>([]);
+  const [targetKeys, setTargetKeys] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   // Initial load.
@@ -46,6 +49,9 @@ export function App() {
     getLaborCatalog()
       .then((c) => setLaborRegions(c.regions))
       .catch(() => setLaborRegions([]));
+    getTargetsCatalog()
+      .then((ts) => setTargetKeys(ts.map((t) => t.impact_key)))
+      .catch(() => setTargetKeys([]));
   }, []);
 
   // Map colouring follows the chosen impact.
@@ -162,6 +168,12 @@ export function App() {
             region={selectedRegion}
             available={selectedRegion !== null && laborRegions.includes(selectedRegion)}
             levers={levers}
+          />
+          <TargetsPanel
+            region={selectedRegion}
+            available={selectedRegion !== null && laborRegions.includes(selectedRegion)}
+            impacts={impacts}
+            targetKeys={targetKeys}
           />
           <ImpactPanels impacts={sim?.impacts ?? []} loading={simLoading} />
         </aside>

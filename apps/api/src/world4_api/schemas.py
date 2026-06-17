@@ -88,3 +88,32 @@ class WorkTimeRequest(BaseModel):
 class SolveRequest(WorkTimeRequest):
     target_weekly_hours: float
     solve_for: str = "retirement_age"
+
+
+class TargetInfo(BaseModel):
+    impact_key: str
+    label: str
+    unit: str
+    allocation: str
+    source: str
+    note: str
+    presets: list[str]
+    default_preset: str
+
+
+class RegionTargetItem(BaseModel):
+    impact_key: str
+    label: str
+    unit: str
+    preset: str
+    boundary: float
+    per_capita_footprint: float
+    overshoot_ratio: float = Field(..., description="footprint / boundary (>1 means over).")
+    overshoot_day: float | None = None
+    source: str
+    note: str
+
+
+class RegionTargets(BaseModel):
+    region: str
+    items: list[RegionTargetItem] = Field(default_factory=list)

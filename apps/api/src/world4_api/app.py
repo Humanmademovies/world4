@@ -26,11 +26,14 @@ from world4_api.schemas import (
     ImpactInfo,
     LaborCatalog,
     ModelInfo,
+    RegionTargetItem,
+    RegionTargets,
     RegionValues,
     SimImpact,
     SimResult,
     SolveRequest,
     SolveResponse,
+    TargetInfo,
     WorkTimeRequest,
     WorkTimeResponse,
 )
@@ -40,6 +43,8 @@ from world4_core import (
     MrioModel,
     Scenario,
     WorkTimeParams,
+    assess,
+    available_targets,
     load_labor_inputs,
     load_model,
     load_test_model,
@@ -331,6 +336,62 @@ def labor_solve_scenario(region: str, request: SolveRequest) -> SolveResponse:
         value=value,
         feasible=value is not None,
     )
+
+
+@api.get("/targets", response_model=list[TargetInfo])
+def targets_catalog() -> list[TargetInfo]:
+    return [
+        TargetInfo(
+            impact_key=t.impact_key,
+            label=t.label,
+            unit=t.unit,
+            allocation=t.allocation,
+            source=t.source,
+            note=t.note,
+            presets=list(t.presets),
+            default_preset=t.default_preset,
+        )
+        for t in available_targets()
+    ]
+
+
+@api.get("/targets/region/{region}", response_model=RegionTargets)
+def region_targets(region: str, co2_preset: str = "2C") -> RegionTargets:
+    """Per-capita footprint vs sourced boundary for a region, each limit on its own."""
+    _, population_by_age = _region_population(region)  # 404/409 if no demography
+    population = sum(population_by_age)
+    model = get_model()
+    impacts = {impact.key: impact for impact in available_impacts(model)}
+
+    items: list[RegionTargetItem] = []
+    for target in available_targets():
+        impact = impacts.get(target.impact_key)
+        if impact is None:
+            continue  # this model doesn't expose that impact
+        footprint_total = impact_by_region(model, impact).get(region)
+        if footprint_total is None:
+            continue
+        preset = (
+            co2_preset
+            if target.impact_key == "co2_combustion" and co2_preset in target.presets
+            else target.default_preset
+        )
+        assessment = assess(target, preset, footprint_total, population)
+        items.append(
+            RegionTargetItem(
+                impact_key=target.impact_key,
+                label=target.label,
+                unit=target.unit,
+                preset=preset,
+                boundary=assessment.boundary,
+                per_capita_footprint=assessment.per_capita_footprint,
+                overshoot_ratio=assessment.overshoot_ratio,
+                overshoot_day=assessment.overshoot_day,
+                source=target.source,
+                note=target.note,
+            )
+        )
+    return RegionTargets(region=region, items=items)
 
 
 def create_app() -> FastAPI:

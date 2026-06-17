@@ -117,6 +117,44 @@ async function postJson<T>(path: string, body: unknown): Promise<T> {
 
 export const getLaborCatalog = () => getJson<LaborCatalog>("/labor");
 
+// --- Sustainability targets -------------------------------------------------
+
+export interface TargetInfo {
+  impact_key: string;
+  label: string;
+  unit: string;
+  allocation: string;
+  source: string;
+  note: string;
+  presets: string[];
+  default_preset: string;
+}
+
+export interface RegionTargetItem {
+  impact_key: string;
+  label: string;
+  unit: string;
+  preset: string;
+  boundary: number;
+  per_capita_footprint: number;
+  overshoot_ratio: number;
+  overshoot_day: number | null;
+  source: string;
+  note: string;
+}
+
+export interface RegionTargets {
+  region: string;
+  items: RegionTargetItem[];
+}
+
+export const getTargetsCatalog = () => getJson<TargetInfo[]>("/targets");
+
+export const getRegionTargets = (region: string, co2Preset: string) =>
+  getJson<RegionTargets>(
+    `/targets/region/${encodeURIComponent(region)}?co2_preset=${encodeURIComponent(co2Preset)}`,
+  );
+
 // Work-time queries carry the current levers so the result reflects the scenario
 // (production hours fall as the chosen industries shrink).
 export const getWorkTime = (region: string, p: WorkTimeParams, levers: Lever[]) =>
