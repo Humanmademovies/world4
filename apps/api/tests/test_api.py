@@ -69,6 +69,18 @@ def test_targets_catalog() -> None:
     assert "2C" in co2["presets"]
 
 
+def test_wiki_endpoints() -> None:
+    sectors = client.get("/api/wiki/sectors").json()
+    assert sectors
+    assert {"sector", "code", "category"} <= sectors[0].keys()
+    info = client.get("/api/model/info").json()
+    sector, region = info["sectors"][0], info["regions"][0]
+    profile = client.get(f"/api/wiki/sector/{sector}", params={"region": region}).json()
+    assert profile["region"] == region
+    assert isinstance(profile["drivers"], list)
+    assert client.get("/api/wiki/sector/not-a-sector").status_code == 404
+
+
 def test_labor_endpoints(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     # Default (autouse fixture) points at a non-existent labour path -> 404.
     assert client.get("/api/labor").status_code == 404

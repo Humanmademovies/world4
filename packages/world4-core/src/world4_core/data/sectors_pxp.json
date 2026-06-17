@@ -1,0 +1,1006 @@
+{
+"system": "pxp",
+"count": 200,
+"sectors": {
+"Paddy rice": {
+"code": "p01.a",
+"number": 1,
+"category": "Food"
+},
+"Wheat": {
+"code": "p01.b",
+"number": 2,
+"category": "Food"
+},
+"Cereal grains nec": {
+"code": "p01.c",
+"number": 3,
+"category": "Food"
+},
+"Vegetables, fruit, nuts": {
+"code": "p01.d",
+"number": 4,
+"category": "Food"
+},
+"Oil seeds": {
+"code": "p01.e",
+"number": 5,
+"category": "Food"
+},
+"Sugar cane, sugar beet": {
+"code": "p01.f",
+"number": 6,
+"category": "Food"
+},
+"Plant-based fibers": {
+"code": "p01.g",
+"number": 7,
+"category": "Food"
+},
+"Crops nec": {
+"code": "p01.h",
+"number": 8,
+"category": "Food"
+},
+"Cattle": {
+"code": "p01.i",
+"number": 9,
+"category": "Food"
+},
+"Pigs": {
+"code": "p01.j",
+"number": 10,
+"category": "Food"
+},
+"Poultry": {
+"code": "p01.k",
+"number": 11,
+"category": "Food"
+},
+"Meat animals nec": {
+"code": "p01.l",
+"number": 12,
+"category": "Food"
+},
+"Animal products nec": {
+"code": "p01.m",
+"number": 13,
+"category": "Food"
+},
+"Raw milk": {
+"code": "p01.n",
+"number": 14,
+"category": "Food"
+},
+"Wool, silk-worm cocoons": {
+"code": "p01.o",
+"number": 15,
+"category": "Clothing"
+},
+"Manure (conventional treatment)": {
+"code": "p01.w.1",
+"number": 16,
+"category": "Food"
+},
+"Manure (biogas treatment)": {
+"code": "p01.w.2",
+"number": 17,
+"category": "Food"
+},
+"Products of forestry, logging and related services (02)": {
+"code": "p02",
+"number": 18,
+"category": "Shelter"
+},
+"Fish and other fishing products; services incidental of fishing (05)": {
+"code": "p05",
+"number": 19,
+"category": "Food"
+},
+"Anthracite": {
+"code": "p10.a",
+"number": 20,
+"category": "Shelter"
+},
+"Coking Coal": {
+"code": "p10.b",
+"number": 21,
+"category": "Shelter"
+},
+"Other Bituminous Coal": {
+"code": "p10.c",
+"number": 22,
+"category": "Shelter"
+},
+"Sub-Bituminous Coal": {
+"code": "p10.d",
+"number": 23,
+"category": "Shelter"
+},
+"Patent Fuel": {
+"code": "p10.e",
+"number": 24,
+"category": "Shelter"
+},
+"Lignite/Brown Coal": {
+"code": "p10.f",
+"number": 25,
+"category": "Shelter"
+},
+"BKB/Peat Briquettes": {
+"code": "p10.g",
+"number": 26,
+"category": "Shelter"
+},
+"Peat": {
+"code": "p10.h",
+"number": 27,
+"category": "Shelter"
+},
+"Crude petroleum and services related to crude oil extraction, excluding surveying": {
+"code": "p11.a",
+"number": 28,
+"category": "Shelter"
+},
+"Natural gas and services related to natural gas extraction, excluding surveying": {
+"code": "p11.b",
+"number": 29,
+"category": "Shelter"
+},
+"Natural Gas Liquids": {
+"code": "p11.b.1",
+"number": 30,
+"category": "Shelter"
+},
+"Other Hydrocarbons": {
+"code": "p11.c",
+"number": 31,
+"category": "Shelter"
+},
+"Uranium and thorium ores (12)": {
+"code": "p12",
+"number": 32,
+"category": "Shelter"
+},
+"Iron ores": {
+"code": "p13.1",
+"number": 33,
+"category": "Construction"
+},
+"Copper ores and concentrates": {
+"code": "p13.20.11",
+"number": 34,
+"category": "Construction"
+},
+"Nickel ores and concentrates": {
+"code": "p13.20.12",
+"number": 35,
+"category": "Construction"
+},
+"Aluminium ores and concentrates": {
+"code": "p13.20.13",
+"number": 36,
+"category": "Construction"
+},
+"Precious metal ores and concentrates": {
+"code": "p13.20.14",
+"number": 37,
+"category": "Construction"
+},
+"Lead, zinc and tin ores and concentrates": {
+"code": "p13.20.15",
+"number": 38,
+"category": "Construction"
+},
+"Other non-ferrous metal ores and concentrates": {
+"code": "p13.20.16",
+"number": 39,
+"category": "Construction"
+},
+"Stone": {
+"code": "p14.1",
+"number": 40,
+"category": "Construction"
+},
+"Sand and clay": {
+"code": "p14.2",
+"number": 41,
+"category": "Construction"
+},
+"Chemical and fertilizer minerals, salt and other mining and quarrying products n.e.c.": {
+"code": "p14.3",
+"number": 42,
+"category": "Food"
+},
+"Products of meat cattle": {
+"code": "p15.a",
+"number": 43,
+"category": "Food"
+},
+"Products of meat pigs": {
+"code": "p15.b",
+"number": 44,
+"category": "Food"
+},
+"Products of meat poultry": {
+"code": "p15.c",
+"number": 45,
+"category": "Food"
+},
+"Meat products nec": {
+"code": "p15.d",
+"number": 46,
+"category": "Food"
+},
+"products of Vegetable oils and fats": {
+"code": "p15.e",
+"number": 47,
+"category": "Food"
+},
+"Dairy products": {
+"code": "p15.f",
+"number": 48,
+"category": "Food"
+},
+"Processed rice": {
+"code": "p15.g",
+"number": 49,
+"category": "Food"
+},
+"Sugar": {
+"code": "p15.h",
+"number": 50,
+"category": "Food"
+},
+"Food products nec": {
+"code": "p15.i",
+"number": 51,
+"category": "Food"
+},
+"Beverages": {
+"code": "p15.j",
+"number": 52,
+"category": "Food"
+},
+"Fish products": {
+"code": "p15.k",
+"number": 53,
+"category": "Food"
+},
+"Tobacco products (16)": {
+"code": "p16",
+"number": 54,
+"category": "Food"
+},
+"Textiles (17)": {
+"code": "p17",
+"number": 55,
+"category": "Clothing"
+},
+"Wearing apparel; furs (18)": {
+"code": "p18",
+"number": 56,
+"category": "Clothing"
+},
+"Leather and leather products (19)": {
+"code": "p19",
+"number": 57,
+"category": "Clothing"
+},
+"Wood and products of wood and cork (except furniture); articles of straw and plaiting materials (20)": {
+"code": "p20",
+"number": 58,
+"category": "Shelter"
+},
+"Wood material for treatment, Re-processing of secondary wood material into new wood material": {
+"code": "p20.w",
+"number": 59,
+"category": "Shelter"
+},
+"Pulp": {
+"code": "p21.1",
+"number": 60,
+"category": "Manufactured_products"
+},
+"Secondary paper for treatment, Re-processing of secondary paper into new pulp": {
+"code": "p21.w.1",
+"number": 61,
+"category": "Manufactured_products"
+},
+"Paper and paper products": {
+"code": "p21.2",
+"number": 62,
+"category": "Manufactured_products"
+},
+"Printed matter and recorded media (22)": {
+"code": "p22",
+"number": 63,
+"category": "Manufactured_products"
+},
+"Coke Oven Coke": {
+"code": "p23.1.a",
+"number": 64,
+"category": "Shelter"
+},
+"Gas Coke": {
+"code": "p23.1.b",
+"number": 65,
+"category": "Shelter"
+},
+"Coal Tar": {
+"code": "p23.1.c",
+"number": 66,
+"category": "Shelter"
+},
+"Motor Gasoline": {
+"code": "p23.20.a",
+"number": 67,
+"category": "Mobility"
+},
+"Aviation Gasoline": {
+"code": "p23.20.b",
+"number": 68,
+"category": "Mobility"
+},
+"Gasoline Type Jet Fuel": {
+"code": "p23.20.c",
+"number": 69,
+"category": "Mobility"
+},
+"Kerosene Type Jet Fuel": {
+"code": "p23.20.d",
+"number": 70,
+"category": "Mobility"
+},
+"Kerosene": {
+"code": "p23.20.e",
+"number": 71,
+"category": "Mobility"
+},
+"Gas/Diesel Oil": {
+"code": "p23.20.f",
+"number": 72,
+"category": "Mobility"
+},
+"Heavy Fuel Oil": {
+"code": "p23.20.g",
+"number": 73,
+"category": "Mobility"
+},
+"Refinery Gas": {
+"code": "p23.20.h",
+"number": 74,
+"category": "Shelter"
+},
+"Liquefied Petroleum Gases (LPG)": {
+"code": "p23.20.i",
+"number": 75,
+"category": "Shelter"
+},
+"Refinery Feedstocks": {
+"code": "p23.20.j",
+"number": 76,
+"category": "Shelter"
+},
+"Ethane": {
+"code": "p23.20.k",
+"number": 77,
+"category": "Shelter"
+},
+"Naphtha": {
+"code": "p23.20.l",
+"number": 78,
+"category": "Shelter"
+},
+"White Spirit & SBP": {
+"code": "p23.20.m",
+"number": 79,
+"category": "Shelter"
+},
+"Lubricants": {
+"code": "p23.20.n",
+"number": 80,
+"category": "Shelter"
+},
+"Bitumen": {
+"code": "p23.20.o",
+"number": 81,
+"category": "Shelter"
+},
+"Paraffin Waxes": {
+"code": "p23.20.p",
+"number": 82,
+"category": "Shelter"
+},
+"Petroleum Coke": {
+"code": "p23.20.q",
+"number": 83,
+"category": "Shelter"
+},
+"Non-specified Petroleum Products": {
+"code": "p23.20.r",
+"number": 84,
+"category": "Shelter"
+},
+"Nuclear fuel": {
+"code": "p23.3",
+"number": 85,
+"category": "Shelter"
+},
+"Plastics, basic": {
+"code": "p24.a",
+"number": 86,
+"category": "Manufactured_products"
+},
+"Secondary plastic for treatment, Re-processing of secondary plastic into new plastic": {
+"code": "p24.a.w",
+"number": 87,
+"category": "Manufactured_products"
+},
+"N-fertiliser": {
+"code": "p24.b",
+"number": 88,
+"category": "Food"
+},
+"P- and other fertiliser": {
+"code": "p24.c",
+"number": 89,
+"category": "Food"
+},
+"Chemicals nec": {
+"code": "p24.d",
+"number": 90,
+"category": "Manufactured_products"
+},
+"Charcoal": {
+"code": "p24.e",
+"number": 91,
+"category": "Shelter"
+},
+"Additives/Blending Components": {
+"code": "p24.f",
+"number": 92,
+"category": "Mobility"
+},
+"Biogasoline": {
+"code": "p24.g",
+"number": 93,
+"category": "Mobility"
+},
+"Biodiesels": {
+"code": "p24.h",
+"number": 94,
+"category": "Mobility"
+},
+"Other Liquid Biofuels": {
+"code": "p24.i",
+"number": 95,
+"category": "Mobility"
+},
+"Rubber and plastic products (25)": {
+"code": "p25",
+"number": 96,
+"category": "Manufactured_products"
+},
+"Glass and glass products": {
+"code": "p26.a",
+"number": 97,
+"category": "Construction"
+},
+"Secondary glass for treatment, Re-processing of secondary glass into new glass": {
+"code": "p26.a.w",
+"number": 98,
+"category": "Construction"
+},
+"Ceramic goods": {
+"code": "p26.b",
+"number": 99,
+"category": "Construction"
+},
+"Bricks, tiles and construction products, in baked clay": {
+"code": "p26.c",
+"number": 100,
+"category": "Construction"
+},
+"Cement, lime and plaster": {
+"code": "p26.d",
+"number": 101,
+"category": "Construction"
+},
+"Ash for treatment, Re-processing of ash into clinker": {
+"code": "p26.d.w",
+"number": 102,
+"category": "Construction"
+},
+"Other non-metallic mineral products": {
+"code": "p26.e",
+"number": 103,
+"category": "Construction"
+},
+"Basic iron and steel and of ferro-alloys and first products thereof": {
+"code": "p27.a",
+"number": 104,
+"category": "Manufactured_products"
+},
+"Secondary steel for treatment, Re-processing of secondary steel into new steel": {
+"code": "p27.a.w",
+"number": 105,
+"category": "Manufactured_products"
+},
+"Precious metals": {
+"code": "p27.41",
+"number": 106,
+"category": "Manufactured_products"
+},
+"Secondary preciuos metals for treatment, Re-processing of secondary preciuos metals into new preciuos metals": {
+"code": "p27.41.w",
+"number": 107,
+"category": "Manufactured_products"
+},
+"Aluminium and aluminium products": {
+"code": "p27.42",
+"number": 108,
+"category": "Manufactured_products"
+},
+"Secondary aluminium for treatment, Re-processing of secondary aluminium into new aluminium": {
+"code": "p27.42.w",
+"number": 109,
+"category": "Manufactured_products"
+},
+"Lead, zinc and tin and products thereof": {
+"code": "p27.43",
+"number": 110,
+"category": "Manufactured_products"
+},
+"Secondary lead for treatment, Re-processing of secondary lead into new lead": {
+"code": "p27.43.w",
+"number": 111,
+"category": "Manufactured_products"
+},
+"Copper products": {
+"code": "p27.44",
+"number": 112,
+"category": "Manufactured_products"
+},
+"Secondary copper for treatment, Re-processing of secondary copper into new copper": {
+"code": "p27.44.w",
+"number": 113,
+"category": "Manufactured_products"
+},
+"Other non-ferrous metal products": {
+"code": "p27.45",
+"number": 114,
+"category": "Manufactured_products"
+},
+"Secondary other non-ferrous metals for treatment, Re-processing of secondary other non-ferrous metals into new other non-ferrous metals": {
+"code": "p27.45.w",
+"number": 115,
+"category": "Manufactured_products"
+},
+"Foundry work services": {
+"code": "p27.5",
+"number": 116,
+"category": "Manufactured_products"
+},
+"Fabricated metal products, except machinery and equipment (28)": {
+"code": "p28",
+"number": 117,
+"category": "Manufactured_products"
+},
+"Machinery and equipment n.e.c. (29)": {
+"code": "p29",
+"number": 118,
+"category": "Manufactured_products"
+},
+"Office machinery and computers (30)": {
+"code": "p30",
+"number": 119,
+"category": "Manufactured_products"
+},
+"Electrical machinery and apparatus n.e.c. (31)": {
+"code": "p31",
+"number": 120,
+"category": "Manufactured_products"
+},
+"Radio, television and communication equipment and apparatus (32)": {
+"code": "p32",
+"number": 121,
+"category": "Manufactured_products"
+},
+"Medical, precision and optical instruments, watches and clocks (33)": {
+"code": "p33",
+"number": 122,
+"category": "Manufactured_products"
+},
+"Motor vehicles, trailers and semi-trailers (34)": {
+"code": "p34",
+"number": 123,
+"category": "Manufactured_products"
+},
+"Other transport equipment (35)": {
+"code": "p35",
+"number": 124,
+"category": "Manufactured_products"
+},
+"Furniture; other manufactured goods n.e.c. (36)": {
+"code": "p36",
+"number": 125,
+"category": "Manufactured_products"
+},
+"Secondary raw materials": {
+"code": "p37",
+"number": 126,
+"category": "Manufactured_products"
+},
+"Bottles for treatment, Recycling of bottles by direct reuse": {
+"code": "p37.w.1",
+"number": 127,
+"category": "Manufactured_products"
+},
+"Electricity by coal": {
+"code": "p40.11.a",
+"number": 128,
+"category": "Shelter"
+},
+"Electricity by gas": {
+"code": "p40.11.b",
+"number": 129,
+"category": "Shelter"
+},
+"Electricity by nuclear": {
+"code": "p40.11.c",
+"number": 130,
+"category": "Shelter"
+},
+"Electricity by hydro": {
+"code": "p40.11.d",
+"number": 131,
+"category": "Shelter"
+},
+"Electricity by wind": {
+"code": "p40.11.e",
+"number": 132,
+"category": "Shelter"
+},
+"Electricity by petroleum and other oil derivatives": {
+"code": "p40.11.f",
+"number": 133,
+"category": "Shelter"
+},
+"Electricity by biomass and waste": {
+"code": "p40.11.g",
+"number": 134,
+"category": "Shelter"
+},
+"Electricity by solar photovoltaic": {
+"code": "p40.11.h",
+"number": 135,
+"category": "Shelter"
+},
+"Electricity by solar thermal": {
+"code": "p40.11.i",
+"number": 136,
+"category": "Shelter"
+},
+"Electricity by tide, wave, ocean": {
+"code": "p40.11.j",
+"number": 137,
+"category": "Shelter"
+},
+"Electricity by Geothermal": {
+"code": "p40.11.k",
+"number": 138,
+"category": "Shelter"
+},
+"Electricity nec": {
+"code": "p40.11.l",
+"number": 139,
+"category": "Shelter"
+},
+"Transmission services of electricity": {
+"code": "p40.12",
+"number": 140,
+"category": "Shelter"
+},
+"Distribution and trade services of electricity": {
+"code": "p40.13",
+"number": 141,
+"category": "Shelter"
+},
+"Coke oven gas": {
+"code": "p40.2.a",
+"number": 142,
+"category": "Shelter"
+},
+"Blast Furnace Gas": {
+"code": "p40.2.b",
+"number": 143,
+"category": "Shelter"
+},
+"Oxygen Steel Furnace Gas": {
+"code": "p40.2.c",
+"number": 144,
+"category": "Shelter"
+},
+"Gas Works Gas": {
+"code": "p40.2.d",
+"number": 145,
+"category": "Shelter"
+},
+"Biogas": {
+"code": "p40.2.e",
+"number": 146,
+"category": "Shelter"
+},
+"Distribution services of gaseous fuels through mains": {
+"code": "p40.2.1",
+"number": 147,
+"category": "Shelter"
+},
+"Steam and hot water supply services": {
+"code": "p40.3",
+"number": 148,
+"category": "Shelter"
+},
+"Collected and purified water, distribution services of water (41)": {
+"code": "p41",
+"number": 149,
+"category": "Shelter"
+},
+"Construction work (45)": {
+"code": "p45",
+"number": 150,
+"category": "Construction"
+},
+"Secondary construction material for treatment, Re-processing of secondary construction material into aggregates": {
+"code": "p45.w",
+"number": 151,
+"category": "Construction"
+},
+"Sale, maintenance, repair of motor vehicles, motor vehicles parts, motorcycles, motor cycles parts and accessoiries": {
+"code": "p50.a",
+"number": 152,
+"category": "Trade"
+},
+"Retail trade services of motor fuel": {
+"code": "p50.b",
+"number": 153,
+"category": "Trade"
+},
+"Wholesale trade and commission trade services, except of motor vehicles and motorcycles (51)": {
+"code": "p51",
+"number": 154,
+"category": "Trade"
+},
+"Retail  trade services, except of motor vehicles and motorcycles; repair services of personal and household goods (52)": {
+"code": "p52",
+"number": 155,
+"category": "Trade"
+},
+"Hotel and restaurant services (55)": {
+"code": "p55",
+"number": 156,
+"category": "Services"
+},
+"Railway transportation services": {
+"code": "p60.1",
+"number": 157,
+"category": "Mobility"
+},
+"Other land transportation services": {
+"code": "p60.2",
+"number": 158,
+"category": "Mobility"
+},
+"Transportation services via pipelines": {
+"code": "p60.3",
+"number": 159,
+"category": "Mobility"
+},
+"Sea and coastal water transportation services": {
+"code": "p61.1",
+"number": 160,
+"category": "Mobility"
+},
+"Inland water transportation services": {
+"code": "p61.2",
+"number": 161,
+"category": "Mobility"
+},
+"Air transport services (62)": {
+"code": "p62",
+"number": 162,
+"category": "Mobility"
+},
+"Supporting and auxiliary transport services; travel agency services (63)": {
+"code": "p63",
+"number": 163,
+"category": "Services"
+},
+"Post and telecommunication services (64)": {
+"code": "p64",
+"number": 164,
+"category": "Services"
+},
+"Financial intermediation services, except insurance and pension funding services (65)": {
+"code": "p65",
+"number": 165,
+"category": "Services"
+},
+"Insurance and pension funding services, except compulsory social security services (66)": {
+"code": "p66",
+"number": 166,
+"category": "Services"
+},
+"Services auxiliary to financial intermediation (67)": {
+"code": "p67",
+"number": 167,
+"category": "Services"
+},
+"Real estate services (70)": {
+"code": "p70",
+"number": 168,
+"category": "Services"
+},
+"Renting services of machinery and equipment without operator and of personal and household goods (71)": {
+"code": "p71",
+"number": 169,
+"category": "Services"
+},
+"Computer and related services (72)": {
+"code": "p72",
+"number": 170,
+"category": "Services"
+},
+"Research and development services (73)": {
+"code": "p73",
+"number": 171,
+"category": "Services"
+},
+"Other business services (74)": {
+"code": "p74",
+"number": 172,
+"category": "Services"
+},
+"Public administration and defence services; compulsory social security services (75)": {
+"code": "p75",
+"number": 173,
+"category": "Services"
+},
+"Education services (80)": {
+"code": "p80",
+"number": 174,
+"category": "Services"
+},
+"Health and social work services (85)": {
+"code": "p85",
+"number": 175,
+"category": "Services"
+},
+"Food waste for treatment: incineration": {
+"code": "p90.1.a",
+"number": 176,
+"category": "Shelter"
+},
+"Paper waste for treatment: incineration": {
+"code": "p90.1.b",
+"number": 177,
+"category": "Shelter"
+},
+"Plastic waste for treatment: incineration": {
+"code": "p90.1.c",
+"number": 178,
+"category": "Shelter"
+},
+"Intert/metal waste for treatment: incineration": {
+"code": "p90.1.d",
+"number": 179,
+"category": "Shelter"
+},
+"Textiles waste for treatment: incineration": {
+"code": "p90.1.e",
+"number": 180,
+"category": "Shelter"
+},
+"Wood waste for treatment: incineration": {
+"code": "p90.1.f",
+"number": 181,
+"category": "Shelter"
+},
+"Oil/hazardous waste for treatment: incineration": {
+"code": "p90.1.g",
+"number": 182,
+"category": "Shelter"
+},
+"Food waste for treatment: biogasification and land application": {
+"code": "p90.2.a",
+"number": 183,
+"category": "Shelter"
+},
+"Paper waste for treatment: biogasification and land application": {
+"code": "p90.2.b",
+"number": 184,
+"category": "Shelter"
+},
+"Sewage sludge for treatment: biogasification and land application": {
+"code": "p90.2.c",
+"number": 185,
+"category": "Shelter"
+},
+"Food waste for treatment: composting and land application": {
+"code": "p90.3.a",
+"number": 186,
+"category": "Shelter"
+},
+"Paper and wood waste for treatment: composting and land application": {
+"code": "p90.3.b",
+"number": 187,
+"category": "Shelter"
+},
+"Food waste for treatment: waste water treatment": {
+"code": "p90.4.a",
+"number": 188,
+"category": "Shelter"
+},
+"Other waste for treatment: waste water treatment": {
+"code": "p90.4.b",
+"number": 189,
+"category": "Shelter"
+},
+"Food waste for treatment: landfill": {
+"code": "p90.5.a",
+"number": 190,
+"category": "Shelter"
+},
+"Paper for treatment: landfill": {
+"code": "p90.5.b",
+"number": 191,
+"category": "Shelter"
+},
+"Plastic waste for treatment: landfill": {
+"code": "p90.5.c",
+"number": 192,
+"category": "Shelter"
+},
+"Inert/metal/hazardous waste for treatment: landfill": {
+"code": "p90.5.d",
+"number": 193,
+"category": "Shelter"
+},
+"Textiles waste for treatment: landfill": {
+"code": "p90.5.e",
+"number": 194,
+"category": "Shelter"
+},
+"Wood waste for treatment: landfill": {
+"code": "p90.5.f",
+"number": 195,
+"category": "Shelter"
+},
+"Membership organisation services n.e.c. (91)": {
+"code": "p91",
+"number": 196,
+"category": "Services"
+},
+"Recreational, cultural and sporting services (92)": {
+"code": "p92",
+"number": 197,
+"category": "Services"
+},
+"Other services (93)": {
+"code": "p93",
+"number": 198,
+"category": "Services"
+},
+"Private households with employed persons (95)": {
+"code": "p95",
+"number": 199,
+"category": "Shelter"
+},
+"Extra-territorial organizations and bodies": {
+"code": "p99",
+"number": 200,
+"category": "Services"
+}
+}
+}

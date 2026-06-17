@@ -29,6 +29,7 @@ from world4_api.schemas import (
     RegionTargetItem,
     RegionTargets,
     RegionValues,
+    SectorInfo,
     SimImpact,
     SimResult,
     SolveRequest,
@@ -42,6 +43,7 @@ from world4_core import (
     Lever,
     MrioModel,
     Scenario,
+    SectorProfile,
     WorkTimeParams,
     assess,
     available_targets,
@@ -49,6 +51,8 @@ from world4_core import (
     load_model,
     load_test_model,
     run_scenario,
+    sector_metadata,
+    sector_profile,
     solve_non_employment_rate,
     solve_retirement_age,
     solve_start_age,
@@ -400,6 +404,34 @@ def region_targets(region: str, co2_preset: str = "2C") -> RegionTargets:
             )
         )
     return RegionTargets(region=region, items=items)
+
+
+@api.get("/wiki/sectors", response_model=list[SectorInfo])
+def wiki_sectors() -> list[SectorInfo]:
+    model = get_model()
+    out: list[SectorInfo] = []
+    for sector in model.sectors:
+        meta = sector_metadata(sector)
+        out.append(
+            SectorInfo(
+                sector=sector,
+                code=str(meta.get("code", "")),
+                category=str(meta.get("category", "")),
+            )
+        )
+    return out
+
+
+@api.get("/wiki/sector/{sector}", response_model=SectorProfile)
+def wiki_sector(sector: str, region: str | None = None) -> SectorProfile:
+    """Region-contextual profile of a sector: what its lever drives, and labour freed."""
+    model = get_model()
+    if sector not in model.sectors:
+        raise HTTPException(status_code=404, detail=f"unknown sector {sector!r}")
+    chosen = region or model.regions[0]
+    if chosen not in model.regions:
+        raise HTTPException(status_code=404, detail=f"unknown region {chosen!r}")
+    return sector_profile(model, sector, chosen)
 
 
 def create_app() -> FastAPI:
