@@ -10,7 +10,7 @@ brick is "done" only when its check passes. This file is updated as bricks land.
 | 0 | Scaffold + engine on the test MRIO | `uv run pytest` green; a reduction scenario yields Δimpacts ≤ 0 | ✅ done |
 | 1 | Wire real EXIOBASE 3 | Reproduce a published figure (France footprint) within tolerance | ✅ done — see [validation.md](validation.md) |
 | 2 | API + web dashboard (globe, sliders) | Move a slider → Δimpacts update on screen in real time | ✅ done — see [dashboard.md](dashboard.md) |
-| 3 | Tunable sustainability targets (per limit, sourced) | Each planetary limit shown side by side vs its own target; no aggregate index | ⬜ next |
+| 3 | Tunable sustainability targets (per limit, sourced) | Each planetary limit shown side by side vs its own target; no aggregate index | ✅ done — see [targets-sources](modeling/targets-sources.md) |
 | 4 | Employment levers (hours → workers, retirement age, n%) | Human-hours & workers computed; act on an industry → work-time redistributes | ✅ done — see [work-time](modeling/work-time.md) |
 | 5 | Anti-mathwashing parameters (e.g. advertising-driven demand) | Each contested assumption is an explicit slider with sourced range + uncertainty shown distinctly | ⬜ |
 

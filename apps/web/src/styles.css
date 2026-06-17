@@ -303,6 +303,88 @@ button:disabled {
   color: var(--muted);
 }
 
+/* Targets panel */
+.targets {
+  margin-top: 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+.tg-preset {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.tg-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.tg-row {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+}
+.tg-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.tg-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.tg-ratio {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+.tg-ratio.over {
+  color: #f85149;
+}
+.tg-ratio.ok {
+  color: var(--accent);
+}
+.tg-bar {
+  position: relative;
+  height: 7px;
+  background: var(--line);
+  border-radius: 4px;
+  margin: 0.35rem 0;
+  overflow: hidden;
+}
+.tg-fill {
+  height: 100%;
+}
+.tg-fill.over {
+  background: #f85149;
+}
+.tg-fill.ok {
+  background: var(--accent);
+}
+.tg-mark {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  background: #e3b341;
+}
+.tg-sub {
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+.tg-target {
+  color: #e3b341;
+}
+.tg-none {
+  color: var(--muted);
+  font-size: 0.76rem;
+  margin-top: 0.5rem;
+}
+
 /* Work-time panel */
 .labor {
   margin-top: 1.1rem;

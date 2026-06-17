@@ -6,6 +6,19 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added — Brick 3: sourced sustainability targets
+- `world4_core.targets`: a sourced per-capita boundary registry (CO2 with 2 °C +
+  1.5° presets, blue water 574 m³, material 7.2 t — O'Neill et al. 2018 + Hot or
+  Cool) and `assess()` (overshoot ratio + overshoot day). No aggregate index; land
+  and energy intentionally have no target.
+- API: `GET /api/targets` (catalog) and `GET /api/targets/region/{region}` (per-capita
+  footprint vs boundary, with CO2 ambition preset).
+- Dashboard: a **Targets** panel per region — each limit vs its fair-share boundary,
+  overshoot ratio/day, ambition selector, honest "no boundary" rows; footprint and
+  target kept visually distinct.
+- Docs: `docs/modeling/targets-sources.md` (sources, EXIOBASE compatibility, scope).
+- Verified on real data: France CO2 ×3.2 (vs 2 °C), blue water ×0.65 (under), material ×2.4.
+
 ### Added — Brick 4: work-time / labour redistribution
 - `world4_core.labor`: the labour accounting identity (forward) and inverse solvers
   (target weekly hours → retirement age / n% / start age) with honest infeasibility.
