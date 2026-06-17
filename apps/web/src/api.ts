@@ -150,6 +150,37 @@ export interface RegionTargets {
 
 export const getTargetsCatalog = () => getJson<TargetInfo[]>("/targets");
 
+// --- Wiki (computed sector profiles) ---------------------------------------
+
+export interface SectorInfo {
+  sector: string;
+  code: string;
+  category: string;
+}
+
+export interface SectorDriver {
+  key: string;
+  label: string;
+  unit: string;
+  share: number;
+}
+
+export interface SectorProfile {
+  sector: string;
+  region: string;
+  code: string;
+  category: string;
+  drivers: SectorDriver[];
+  labour_hours_in_region: number | null;
+}
+
+export const getWikiSectors = () => getJson<SectorInfo[]>("/wiki/sectors");
+
+export const getWikiSector = (sector: string, region: string) =>
+  getJson<SectorProfile>(
+    `/wiki/sector/${encodeURIComponent(sector)}?region=${encodeURIComponent(region)}`,
+  );
+
 export const getRegionTargets = (region: string, co2Preset: string) =>
   getJson<RegionTargets>(
     `/targets/region/${encodeURIComponent(region)}?co2_preset=${encodeURIComponent(co2Preset)}`,

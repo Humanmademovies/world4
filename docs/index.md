@@ -23,6 +23,7 @@ well as solarpunk utopias — calibrated on serious projection scenarios.
 - [Work-time model](modeling/work-time.md) — the labour-redistribution identity, bidirectional, coupled to industries (brick 4).
 - [Validation](validation.md) — binary checks against published figures (brick 1: France footprint).
 - [Dashboard](dashboard.md) — the web client, the API surface, and headline impacts (brick 2).
+- [In-app wiki](wiki.md) — the bilingual, live "Guide" drawer (narrative + computed sector profiles).
 
 ## Data
 
