@@ -61,6 +61,14 @@ def test_simulate_unknown_sector_returns_422() -> None:
     assert response.status_code == 422
 
 
+def test_targets_catalog() -> None:
+    catalog = client.get("/api/targets").json()
+    keys = {t["impact_key"] for t in catalog}
+    assert {"co2_combustion", "water_blue", "material"} <= keys
+    co2 = next(t for t in catalog if t["impact_key"] == "co2_combustion")
+    assert "2C" in co2["presets"]
+
+
 def test_labor_endpoints(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     # No labour artifact configured -> 404.
     monkeypatch.delenv("WORLD4_LABOR_PATH", raising=False)
@@ -121,6 +129,12 @@ def test_labor_endpoints(tmp_path, monkeypatch) -> None:  # type: ignore[no-unty
         ).json()
         assert psolve["feasible"] is True
         assert psolve["value"] == pytest.approx(65.0)
+
+        # Targets per region: endpoint works (items empty on the test model, which has
+        # no co2/water/material headline impacts — generic fallback keys).
+        rt = client.get("/api/targets/region/FR").json()
+        assert rt["region"] == "FR"
+        assert isinstance(rt["items"], list)
 
         # Rest-of-World aggregate has no demography -> 409.
         assert client.get("/api/labor/WA").status_code == 409
