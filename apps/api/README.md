@@ -4,8 +4,13 @@ FastAPI service that exposes the [`world4-core`](../../packages/world4-core/) en
 over HTTP, so the web dashboard (and later a Godot client) can drive the same model.
 
 ```bash
-uv run world4-api          # serves on http://127.0.0.1:8000  (docs at /docs)
+uv run world4-api          # serves on http://127.0.0.1:8537  (docs at /docs)
 ```
+
+It defaults to port **8537** (8000 is often reserved/forwarded on Windows) and
+auto-loads the local artifacts `data/models/exiobase_2022_pxp.npz` and
+`data/labor/labor_inputs_2022.json` if present (else the synthetic test model).
+Override with `WORLD4_API_PORT`, `WORLD4_MODEL_PATH`, `WORLD4_LABOR_PATH`.
 
 Endpoints:
 

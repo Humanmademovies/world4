@@ -74,7 +74,7 @@ uv run bandit -r packages/world4-core/src apps/api/src   # security static analy
 uv run world4 info|demo         # engine CLI on the test MRIO
 uv run world4 build-model --exiobase data/exiobase3/IOT_2022_pxp.zip \
     --out data/models/exiobase_2022_pxp.npz   # precompute the served artifact
-WORLD4_MODEL_PATH=data/models/exiobase_2022_pxp.npz uv run world4-api  # API on real data
+uv run world4-api               # API on port 8537; auto-loads data/models + data/labor if present
 ```
 
 Web dashboard (`apps/web`, React+TS+Vite, MapLibre):
@@ -85,9 +85,11 @@ npm run build      # tsc --noEmit + vite build -> dist/ (served by world4-api at
 npm run dev        # hot reload; proxies /api to the API
 ```
 
-The API serves the artifact at `WORLD4_MODEL_PATH` if set, else the test model — so
-CI and a fresh clone work offline. Port 8000 is reserved on some Windows setups; set
-`WORLD4_API_PORT`. The engine never touches the big Leontief inverse at serve time
+The API defaults to port **8537** (8000 is reserved/forwarded on the maintainer's
+Windows box) and auto-loads `data/models/exiobase_2022_pxp.npz` +
+`data/labor/labor_inputs_2022.json` when present, else the synthetic test model — so
+CI and a fresh clone work offline. Override via `WORLD4_API_PORT` / `WORLD4_MODEL_PATH`
+/ `WORLD4_LABOR_PATH`. The engine never touches the big Leontief inverse at serve time
 (it uses precomputed multipliers `M = S·L`; see ADR 0006).
 
 Real-EXIOBASE tests are marked `@pytest.mark.exiobase` and skipped unless data is
