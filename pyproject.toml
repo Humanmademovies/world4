@@ -24,9 +24,9 @@ world4-api = { workspace = true }
 
 [dependency-groups]
 dev = [
-    "pytest>=8.2",
+    "pytest>=9.1.1",
     "pytest-cov>=5.0",
-    "ruff>=0.6",
+    "ruff>=0.15.18",
     "mypy>=1.11",
     "bandit>=1.7",
     "pre-commit>=3.8",
