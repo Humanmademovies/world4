@@ -1,0 +1,19 @@
+# Production deployment behind a reverse proxy (external `proxy` network).
+# The proxy strips the /world4 prefix; the SPA is built with that base so its
+# asset URLs and API calls stay under /world4/ browser-side.
+services:
+  world4:
+    build:
+      context: .
+      args:
+        WORLD4_WEB_BASE: /world4/
+    container_name: world4
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data:ro
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
