@@ -40,6 +40,23 @@ export interface SimImpact {
   baseline: number;
   delta: number;
   relative: number;
+  // Uncertainty band — non-null only when sourced assumptions are active.
+  delta_low?: number | null;
+  delta_high?: number | null;
+  relative_low?: number | null;
+  relative_high?: number | null;
+}
+
+export interface AssumptionInfo {
+  key: string;
+  label: string;
+  description: string;
+  unit: string;
+  default: number;
+  low: number; // low end of the published range
+  high: number; // high end of the published range
+  source: string;
+  note: string;
 }
 
 export interface SimResult {
@@ -60,12 +77,16 @@ export const getModelInfo = () => getJson<ModelInfo>("/model/info");
 export const getImpacts = () => getJson<ImpactInfo[]>("/impacts");
 export const getImpactByRegion = (key: string) =>
   getJson<RegionValues>(`/impacts/${encodeURIComponent(key)}/by-region`);
+export const getAssumptions = () => getJson<AssumptionInfo[]>("/assumptions");
 
-export async function simulate(levers: Lever[]): Promise<SimResult> {
+export async function simulate(
+  levers: Lever[],
+  assumptions: Record<string, number> = {},
+): Promise<SimResult> {
   const response = await fetch(BASE + "/simulate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name: "ui", levers }),
+    body: JSON.stringify({ name: "ui", levers, assumptions }),
   });
   if (!response.ok) throw new Error(`${response.status} on POST /simulate`);
   return response.json() as Promise<SimResult>;

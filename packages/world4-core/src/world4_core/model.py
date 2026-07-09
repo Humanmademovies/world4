@@ -31,10 +31,20 @@ class Lever(BaseModel):
 
 
 class Scenario(BaseModel):
-    """A set of demand-side reductions to propagate through the supply chain."""
+    """A set of demand-side reductions to propagate through the supply chain.
+
+    ``assumptions`` carries the settings of explicit, sourced hypotheses (see
+    ``world4_core.assumptions``), keyed by assumption key. Each value is the
+    fraction of final demand the hypothesis removes; it composes
+    multiplicatively with the levers and keeps the negative-only invariant.
+    """
 
     name: str = "scenario"
     levers: list[Lever] = Field(default_factory=list)
+    assumptions: dict[str, float] = Field(
+        default_factory=dict,
+        description="Active sourced-assumption settings, by key (fraction in [0, 1]).",
+    )
 
 
 class ImpactTotal(BaseModel):

@@ -39,12 +39,37 @@ class SimImpact(BaseModel):
     baseline: float
     delta: float = Field(..., description="Change vs baseline; <= 0 in the degrowth seed.")
     relative: float
+    # Uncertainty band — only set when the scenario carries sourced assumptions.
+    # The band spans the *published* range of the active assumptions, so clients
+    # can render assumption-dependent results distinctly from accounting ones.
+    delta_low: float | None = Field(
+        None, description="Delta with every active assumption at the low end of its sourced range."
+    )
+    delta_high: float | None = Field(
+        None, description="Delta with every active assumption at the high end of its sourced range."
+    )
+    relative_low: float | None = None
+    relative_high: float | None = None
 
 
 class SimResult(BaseModel):
     scenario: str
     model: str
     impacts: list[SimImpact] = Field(default_factory=list)
+
+
+class AssumptionInfo(BaseModel):
+    """A sourced, contested hypothesis exposed as an explicit slider (brick 5)."""
+
+    key: str
+    label: str
+    description: str
+    unit: str
+    default: float
+    low: float = Field(..., description="Low end of the published range.")
+    high: float = Field(..., description="High end of the published range.")
+    source: str = Field(..., description="Citation for default/low/high.")
+    note: str
 
 
 class LaborCatalog(BaseModel):

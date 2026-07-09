@@ -9,6 +9,12 @@ The engine is UI-agnostic: it consumes a :class:`Scenario` and returns a
 ``docs/modeling/`` for the model's non-negotiable framing.
 """
 
+from world4_core.assumptions import (
+    Assumption,
+    available_assumptions,
+    band_scenarios,
+    get_assumption,
+)
 from world4_core.build import precompute_multipliers, to_served_model
 from world4_core.data import load_exiobase_model, load_test_model
 from world4_core.engine import build_delta_final_demand, leontief_inverse, run_scenario
@@ -40,6 +46,7 @@ from world4_core.wiki import SectorDriver, SectorProfile, sector_metadata, secto
 __version__ = "0.1.0"
 
 __all__ = [
+    "Assumption",
     "Extension",
     "FootprintEntry",
     "ImpactTotal",
@@ -58,9 +65,12 @@ __all__ = [
     "WorkTimeResult",
     "__version__",
     "assess",
+    "available_assumptions",
     "available_targets",
+    "band_scenarios",
     "build_delta_final_demand",
     "consumption_footprint",
+    "get_assumption",
     "get_target",
     "leontief_inverse",
     "load_exiobase_model",

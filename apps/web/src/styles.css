@@ -676,3 +676,112 @@ button:disabled {
 .wt-solved.no {
   color: #d29922;
 }
+
+/* Assumptions (brick 5) — a contested hypothesis must never look like accounting.
+   Everything assumption-related shares the amber hue + dashed borders. */
+.assumptions {
+  margin-top: 1.1rem;
+  border: 1px dashed #b8912f;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem 0.65rem;
+}
+.assumptions-flag {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: #e3b341;
+  border: 1px dashed #b8912f;
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+.assumption-list {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+.assumption {
+  border-top: 1px solid var(--line);
+  padding-top: 0.45rem;
+}
+.assumption-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+.assumption-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.assumption-value {
+  margin-left: auto;
+  color: #e3b341;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.assumption-desc {
+  color: var(--muted);
+  font-size: 0.74rem;
+  margin: 0.25rem 0 0.35rem;
+}
+.assumption-slider {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.assumption-slider input[type="range"] {
+  flex: 1;
+  accent-color: #e3b341;
+}
+.assumption-bound {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+.assumption-range {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin-top: 0.25rem;
+}
+.assumption-source {
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+}
+.assumption-source summary {
+  cursor: pointer;
+  color: #e3b341;
+}
+.assumption-source p {
+  color: var(--muted);
+  margin: 0.3rem 0 0;
+}
+.assumption-note {
+  font-style: italic;
+}
+
+/* Assumption-dependent impact cards: banded, dashed, flagged. */
+.impact-card.assumed {
+  border-style: dashed;
+  border-color: #b8912f;
+}
+.assumed-flag {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #e3b341;
+  white-space: nowrap;
+}
+.impact-band {
+  color: #e3b341;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+.impact-card .bar {
+  position: relative;
+}
+.bar-band {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: rgba(227, 179, 65, 0.35);
+}
