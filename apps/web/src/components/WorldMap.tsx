@@ -13,7 +13,7 @@ interface Props {
 const STYLE: any = {
   version: 8,
   sources: {
-    countries: { type: "geojson", data: "/countries.geojson", promoteId: "iso" },
+    countries: { type: "geojson", data: `${import.meta.env.BASE_URL}countries.geojson`, promoteId: "iso" },
   },
   layers: [
     { id: "bg", type: "background", paint: { "background-color": "#08121a" } },
