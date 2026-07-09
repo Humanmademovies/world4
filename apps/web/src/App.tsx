@@ -13,6 +13,7 @@ import {
   type RegionValues,
   type SimResult,
 } from "./api";
+import { AssumptionsPanel } from "./components/AssumptionsPanel";
 import { Controls } from "./components/Controls";
 import { ImpactPanels } from "./components/ImpactPanels";
 import { LaborPanel } from "./components/LaborPanel";
@@ -31,6 +32,7 @@ export function App() {
   const [regionValues, setRegionValues] = useState<RegionValues | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [levers, setLevers] = useState<Lever[]>([]);
+  const [assumptions, setAssumptions] = useState<Record<string, number>>({});
   const [sim, setSim] = useState<SimResult | null>(null);
   const [simLoading, setSimLoading] = useState(false);
   const [globe, setGlobe] = useState(false);
@@ -72,17 +74,17 @@ export function App() {
       .catch((e) => setError(String(e)));
   }, [mapImpact]);
 
-  // Debounced simulation whenever the levers change.
+  // Debounced simulation whenever the levers or assumptions change.
   useEffect(() => {
     setSimLoading(true);
     const handle = setTimeout(() => {
-      simulate(levers)
+      simulate(levers, assumptions)
         .then(setSim)
         .catch((e) => setError(String(e)))
         .finally(() => setSimLoading(false));
     }, 250);
     return () => clearTimeout(handle);
-  }, [levers]);
+  }, [levers, assumptions]);
 
   const values = regionValues?.values ?? {};
   const maxValue = useMemo(() => {
@@ -176,6 +178,11 @@ export function App() {
             selectedRegion={selectedRegion}
             levers={levers}
             onChange={setLevers}
+            onHelp={() => openWiki({ kind: "page", slug: "levers" })}
+          />
+          <AssumptionsPanel
+            values={assumptions}
+            onChange={setAssumptions}
             onHelp={() => openWiki({ kind: "page", slug: "levers" })}
           />
           <LaborPanel

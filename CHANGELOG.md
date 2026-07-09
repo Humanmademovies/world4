@@ -6,6 +6,25 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added — Brick 5: anti-mathwashing assumptions
+- `world4_core.assumptions`: a sourced registry of contested hypotheses
+  (`Assumption`: default + published low/high + mandatory citation). First entry:
+  `advertising_demand_share` — 6.36% of final demand [0.42%, 14.75%], from
+  Molinari & Turino 2018 (EJ 128(613), Table 4: +6.79% [0.42, 17.3] long-run
+  consumption vs a no-advertising counterfactual, converted via x/(1+x)); low end
+  consistent with Ashley, Granger & Schmalensee 1980.
+- `Scenario.assumptions`: active hypotheses compose **multiplicatively** with the
+  levers in `build_delta_final_demand` (negative-only invariant preserved;
+  unknown keys and out-of-range values are errors, never silent).
+- API: `GET /api/assumptions` (catalog with provenance); `POST /api/simulate` now
+  returns per-impact `delta_low`/`delta_high` (+ relatives) computed at the
+  published range ends whenever assumptions are active.
+- Dashboard: an **Assumptions** panel (amber, dash-bordered — visually distinct
+  from levers), slider constrained to the published range with the citation one
+  click away; assumption-touched impact cards switch to a banded "≈ hypothesis"
+  display instead of a single hard number.
+- Docs: `docs/modeling/parameters.md` — implemented section + sourced table.
+
 ### Added — In-app wiki (Guide drawer)
 - A left **Guide** drawer making the dashboard self-explanatory: bilingual (FR/EN)
   narrative pages (overview, levers, work-time, targets, glossary) + a live

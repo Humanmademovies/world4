@@ -23,6 +23,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from world4_api.schemas import (
+    AssumptionInfo,
     ImpactInfo,
     LaborCatalog,
     ModelInfo,
@@ -46,7 +47,9 @@ from world4_core import (
     SectorProfile,
     WorkTimeParams,
     assess,
+    available_assumptions,
     available_targets,
+    band_scenarios,
     load_labor_inputs,
     load_model,
     load_test_model,
@@ -147,15 +150,48 @@ def impact_region_values(key: str) -> RegionValues:
     )
 
 
+@api.get("/assumptions", response_model=list[AssumptionInfo])
+def list_assumptions() -> list[AssumptionInfo]:
+    """The sourced catalog of contested hypotheses (anti-mathwashing sliders)."""
+    return [
+        AssumptionInfo(
+            key=a.key,
+            label=a.label,
+            description=a.description,
+            unit=a.unit,
+            default=a.default,
+            low=a.low,
+            high=a.high,
+            source=a.source,
+            note=a.note,
+        )
+        for a in available_assumptions()
+    ]
+
+
 @api.post("/simulate", response_model=SimResult)
 def simulate(scenario: Scenario) -> SimResult:
     model = get_model()
     delta_y = build_delta_final_demand(model, scenario)
+    # With active assumptions, also propagate the published low/high ends of
+    # their sourced ranges so clients can show the uncertainty band distinctly.
+    band = band_scenarios(scenario)
+    delta_y_band = (
+        (build_delta_final_demand(model, band[0]), build_delta_final_demand(model, band[1]))
+        if band is not None
+        else None
+    )
     impacts: list[SimImpact] = []
     for impact in available_impacts(model):
         baseline = impact_value(model, impact, model.final_demand)
         delta = impact_value(model, impact, delta_y)
         relative = delta / baseline if baseline else 0.0
+        delta_low = delta_high = relative_low = relative_high = None
+        if delta_y_band is not None:
+            delta_low = impact_value(model, impact, delta_y_band[0])
+            delta_high = impact_value(model, impact, delta_y_band[1])
+            relative_low = delta_low / baseline if baseline else 0.0
+            relative_high = delta_high / baseline if baseline else 0.0
         impacts.append(
             SimImpact(
                 key=impact.key,
@@ -165,6 +201,10 @@ def simulate(scenario: Scenario) -> SimResult:
                 baseline=baseline,
                 delta=delta,
                 relative=relative,
+                delta_low=delta_low,
+                delta_high=delta_high,
+                relative_low=relative_low,
+                relative_high=relative_high,
             )
         )
     return SimResult(scenario=scenario.name, model=model.name, impacts=impacts)

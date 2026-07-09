@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from world4_core.assumptions import get_assumption
 from world4_core.model import ImpactTotal, Scenario, ScenarioResult
 from world4_core.mrio import MrioModel
 
@@ -27,13 +28,23 @@ def build_delta_final_demand(model: MrioModel, scenario: Scenario) -> np.ndarray
 
     Reductions accumulate per product and are clamped so the cumulative removed
     fraction never exceeds 1 (you cannot remove more than 100% of a demand).
-    The result is ``<= 0`` everywhere, enforcing the seed's negative-only rule.
+    Active assumptions then remove their share of whatever the levers leave
+    standing: ``remaining = (1 - levers) * Π(1 - assumption)``. The result is
+    ``<= 0`` everywhere, enforcing the seed's negative-only rule.
     """
     fraction = np.zeros(model.n, dtype=float)
     for lever in scenario.levers:
         positions = model.match_indices(sector=lever.sector, region=lever.region)
         fraction[positions] += lever.reduction
     np.clip(fraction, 0.0, 1.0, out=fraction)
+    if scenario.assumptions:
+        remaining = 1.0 - fraction
+        for key, value in scenario.assumptions.items():
+            get_assumption(key)  # unknown keys are an error, never a silent no-op
+            if not 0.0 <= value <= 1.0:
+                raise ValueError(f"assumption {key!r} must be in [0, 1], got {value}")
+            remaining *= 1.0 - value
+        fraction = 1.0 - remaining
     return -fraction * model.final_demand
 
 
