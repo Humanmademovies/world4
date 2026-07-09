@@ -48,7 +48,7 @@ export interface SimResult {
   impacts: SimImpact[];
 }
 
-const BASE = "/api";
+const BASE = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/api`;
 
 async function getJson<T>(path: string): Promise<T> {
   const response = await fetch(BASE + path);
